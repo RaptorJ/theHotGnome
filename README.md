@@ -91,6 +91,8 @@ Enfin au niveau de l’architecture, nous avions réfléchis à mettre en place 
 de notre manque d’expérience avec le framework, nous préférons nous orienter sur une architecture plus classique avec plusieurs redirections vers 
 différents fichiers vue. 
 
+![Maquette prototype initial](maquette.png)
+
 
 ### Planifier
 
