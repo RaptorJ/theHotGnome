@@ -2,8 +2,16 @@
   border: 1px solid black;
 }*/
 
+.row{
+  padding: 0px;
+}
+
+.col-md-10, .col-lg-10, .col-sm-12{
+  padding: 0px;
+}
+
 body{
-  background-color: #000000;
+  background-color: #2A2A2A;
 }
 
 header, .main-body{
@@ -27,14 +35,20 @@ header ul li{
   text-align: center;
 }
 
-header ul li a{
+a{
   text-decoration: none;
   color: black;
+  transition: all 0.4s;
 }
 
-header ul li a:hover{
+a:hover{
   color: orange;
   text-decoration: none;
+  transition: all 0.4s;
+}
+
+h1{
+  margin-bottom: 0px;
 }
 
 .carousel-inner > .carousel-item > img{
@@ -44,8 +58,10 @@ header ul li a:hover{
 }
 
 .promo-accueil{
-  width: 90%;
+  width: 70%;
   height: 200px;
+  margin: auto;
+  display: block;
 }
 
 .annonce{
@@ -55,9 +71,67 @@ header ul li a:hover{
 }
 
 footer{
-  min-height: 300px;
+  min-height: 200px;
+  color: orange;
+  background-color: #2A2A2A;
+  text-align: center;
+}
+
+footer .row {
+  min-height: 200px;
 }
 
 footer h3{
   text-align: center;
 }
+
+/*LOGIN PAGE*/
+.login-background{
+  margin-top: 30px;
+  min-height: 400px;
+  background-color: #FFFFFF;
+}
+
+.login-background h2{
+  margin-top: 10px;
+  text-align: center;
+  color: #2A2A2A;
+}
+
+.login-background input{
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  height: 40px;
+  width: 80%;
+  border-radius: 5px;
+  border: 2px solid #AAAAAA;
+}
+
+.login-background input:focus{
+  outline: none !important;
+  border-color: orange;
+}
+
+.login-background input[type=submit]{
+  margin-top: 80px;
+  border: none;
+  background-color: #2A2A2A;
+  color: orange;
+  transition: all 0.6s
+}
+
+.login-background input[type=submit]:hover{
+  border: none;
+  background-color: orange;
+  color: #2A2A2A;
+  transition: all 0.6s
+}
+/*END LOGIN PAGE*/
+
+/*404*/
+.login-background img{
+  display: block;
+  margin: auto;
+}
+/*END 404*/
