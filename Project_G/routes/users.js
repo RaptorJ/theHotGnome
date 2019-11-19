@@ -61,6 +61,7 @@ router.post('/register', async (req, res) => {
   if (user) {
     res.status(403).send('This username is already taken !')
     // Alexis
+    // Titi
     return
   }
 
