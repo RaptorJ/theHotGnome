@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="JS/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <%- include('header.ejs')%>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 col-lg-6 col-sm-12 login-background">
+          <h2>Register</h2>
+            <form action="http://localhost:3000/user/register" method="POST">
+              <input name="username" type="text" placeholder="Username" />
+              <input name="password" type="password" placeholder="Mot de passe" />
+              <input name="verifPassword" type="password" placeholder="Vérification du mot de passe" />
+              <input name="firstname" type="text" placeholder="Prénom" />
+              <input name="lastname" type="text" placeholder="Nom" />
+              <input name="mail" type="text" placeholder="Mail" />
+              <input name="birthdate" type="date" placeholder="01/01/1960" />
+              <input name="street" type="text" placeholder="20 avenue de la République" />
+              <input name="city" type="text" placeholder="Paris" />
+              <input name="postalCode" type="text" placeholder="75010" />
+              <input name="country" type="text" placeholder="France" />
+              <input type="submit" value="Register" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('footer.ejs')%>
+  </body>
+</html>
