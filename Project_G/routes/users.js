@@ -60,6 +60,7 @@ router.post('/register', async (req, res) => {
   const user = await User.findOne({ username: username, mail: mail })
   if (user) {
     res.status(403).send('This username is already taken !')
+    // Alexis
     return
   }
 
