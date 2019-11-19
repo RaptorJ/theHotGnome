@@ -5,6 +5,8 @@ var app = express()
 const path = require('path')
 const bodyParser = require('body-parser') // pour parser les requêtes POST
 const favicon = require('serve-favicon')
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/theHotGnome')
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
@@ -19,7 +21,7 @@ app.use(session({
   name: 'sessId'
 }))
 
-app.use('/user', users.router)
+app.use('/users', users.router)
 
 app.use(express.static('views'))
 
