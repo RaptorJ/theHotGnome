@@ -21,7 +21,7 @@ app.use(session({
   name: 'sessId'
 }))
 
-app.use('/user', users.router)
+app.use('/users', users.router)
 
 app.use(express.static('views'))
 

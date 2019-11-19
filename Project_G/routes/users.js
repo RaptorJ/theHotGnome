@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
 
   const user = await User.findOne({ username: username })
   if (!(await bcrypt.compare(password, user.password))) {
-    res.render(404).send('You are not registered ! Your username or password might be wrong !')
+    res.status(404).render('404') // .send('You are not registered ! Your username or password might be wrong !')
     return
   }
 
