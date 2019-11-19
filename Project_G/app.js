@@ -3,6 +3,7 @@ const session = require('express-session')
 const users = require('./routes/users.js')
 var app = express()
 const path = require('path')
+// coucou
 const bodyParser = require('body-parser') // pour parser les requêtes POST
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/theHotGnome')
