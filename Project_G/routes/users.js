@@ -1,34 +1,34 @@
 const express = require('express')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 var router = express.Router()
 
 const User = require('../models/user.model.js')
 
 router.use(express.static('views'))
-/*
+
 async function tokenToUserMiddleware (req, res, next) {
   if (req.session && req.session.userId) {
     req.user = await User.findById(req.session.userId)
   }
   next()
 }
-*/
+
 /** ** route for log ** **/
 router.get('/login', (req, res) => {
   console.log('Get login page')
   res.render('login')
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   console.log(req.body)
   const { username, password } = req.body
-  /*
+
   const user = await User.findOne({ username: username })
   if (!(await bcrypt.compare(password, user.password))) {
     res.render(404).send('You are not registered ! Your username or password might be wrong !')
     return
   }
-  */
+
   if (username === '') {
     res.render('404')
   } else {
@@ -56,13 +56,13 @@ router.post('/register', async (req, res) => {
     res.status(403).send('You did not put enough information!')
   }
   const hash = await bcrypt.hash(password, 10)
-  /*
+
   const user = await User.findOne({ username: username, mail: mail })
   if (user) {
     res.status(403).send('This username is already taken !')
     return
   }
-  */
+
   try {
     const newUser = new User({
       firstname: firstname,
@@ -76,8 +76,9 @@ router.post('/register', async (req, res) => {
       postalCode: postalCode,
       country: country
     })
-    // await newUser.save()
-    res.render('index')
+    await newUser.save()
+    // res.render('index')
+    res.send('User registered!')
     console.log(`Post register page ${username}`)
     req.session.username = newUser.username
     return
@@ -87,5 +88,6 @@ router.post('/register', async (req, res) => {
 })
 
 module.exports = {
-  router
+  router,
+  tokenToUserMiddleware
 }
