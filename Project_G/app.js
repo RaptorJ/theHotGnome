@@ -4,7 +4,6 @@ const users = require('./routes/users.js')
 var app = express()
 const path = require('path')
 const bodyParser = require('body-parser') // pour parser les requêtes POST
-const favicon = require('serve-favicon')
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/theHotGnome')
 
@@ -21,7 +20,7 @@ app.use(session({
   name: 'sessId'
 }))
 
-app.use('/users', users.router)
+app.use('/user', users.router)
 
 app.use(express.static('views'))
 
