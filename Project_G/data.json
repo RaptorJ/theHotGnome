@@ -1,0 +1,31 @@
+{
+    "users": [
+        {
+            "username": "admin",
+            "password": "admin"
+        },
+        {
+            "username": "Test",
+            "password": "123456"
+        }
+    ],
+ 
+    "articles": [
+        {
+            "seller": "Fnac",
+            "title": "PS4 Pro 1 To",
+            "content": "Ceci est un test pour un article",
+            "date": "2019-11-12T14:18:18.834+00:00",
+            "price": 299.99,
+            "comments" : []
+        },
+        {
+            "seller": "Fnac",
+            "title": "XBox One X",
+            "content": "Ceci est un second test pour un article",
+            "date": "2019-11-12T14:18:18.834+00:00",
+            "price": 259.99,
+            "comments" : []
+        }
+    ]
+}
