@@ -1,12 +1,44 @@
 {
+    "roles": [
+        {
+            "name": "user"
+        },
+        {
+            "name": "premium"
+        },
+        {
+            "name": "admin"
+        }
+    ],
+
     "users": [
         {
             "username": "admin",
-            "password": "admin"
+            "password": "admin",
+            "mail": "admin@admin.com",
+            "birthDate": "2019-11-12T14:18:18.834+00:00",
+            "_role": "admin",
+            "address": 
+            {
+                "street": "1 rue de l'Admin",
+                "city": "Adminville",
+                "postalCode": 11001,
+                "country": "France"
+            }
         },
         {
             "username": "Test",
-            "password": "123456"
+            "password": "123456",
+            "mail": "test@test.com",
+            "birthDate": "2019-11-12T14:18:18.834+00:00",
+            "_role": "user",
+            "address": 
+            {
+                "street": "1 rue du User",
+                "city": "Userville",
+                "postalCode": 11111,
+                "country": "France"
+            }
         }
     ],
  
@@ -17,6 +49,8 @@
             "content": "Ceci est un test pour un article",
             "date": "2019-11-12T14:18:18.834+00:00",
             "price": 299.99,
+            "image": "./views/Images/Cart.png",
+            "number": 45,
             "comments" : []
         },
         {
@@ -25,7 +59,28 @@
             "content": "Ceci est un second test pour un article",
             "date": "2019-11-12T14:18:18.834+00:00",
             "price": 259.99,
+            "image": "./views/Images/Cart.png",
+            "number": 45,
             "comments" : []
+        }
+    ],
+
+    "carts":
+    [
+        {
+            "_user": "Test",
+            "articles":
+            [
+                {
+                    "title": "PS4 Pro 1 To"
+                },
+                {
+                    "title": "PS4 Pro 1 To"
+                },
+                {
+                    "title": "XBox One X"
+                }
+            ]
         }
     ]
 }
