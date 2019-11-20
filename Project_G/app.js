@@ -1,6 +1,7 @@
 const express = require('express')
 const session = require('express-session')
 const users = require('./routes/users.js')
+const articles = require('./routes/articles.js')
 var app = express()
 const path = require('path')
 // coucou
@@ -17,11 +18,12 @@ app.use(bodyParser.json()) // for API requests
 // app.use(favicon(path.join(__dirname, 'views', 'Images', 'icon.ico'))) // Not working
 
 app.use(session({
-  secret: 'mydirtylittlesecret',
-  name: 'sessId'
+  name: 'sessId',
+  username: undefined
 }))
 
 app.use('/users', users.router)
+app.use('/articles', articles.router)
 
 app.use(express.static('views'))
 

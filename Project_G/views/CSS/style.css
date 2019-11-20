@@ -127,6 +127,20 @@ footer h3{
   color: #2A2A2A;
   transition: all 0.6s
 }
+
+.login-background p{
+  text-align: center;
+}
+
+.login-background a{
+  color: orange;
+  transition: all 0.6s;
+}
+
+.login-background a:hover{
+  color: #2A2A2A;
+  transition: all 0.6s;
+}
 /*END LOGIN PAGE*/
 
 /*REGISTER PAGE*/
@@ -138,3 +152,15 @@ footer h3{
   margin: auto;
 }
 /*END 404*/
+
+/*NEW ARTICLE PAGE*/
+.login-background textarea{
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  height: 120px;
+  width: 80%;
+  border-radius: 5px;
+  border: 2px solid #AAAAAA;
+}
+/*END NEW ARTICLE PAGE*/
