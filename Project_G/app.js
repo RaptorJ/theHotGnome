@@ -1,8 +1,10 @@
 const express = require('express')
 const session = require('express-session')
 const users = require('./routes/users.js')
+const articles = require('./routes/articles.js')
 var app = express()
 const path = require('path')
+// coucou
 const bodyParser = require('body-parser') // pour parser les requêtes POST
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/theHotGnome')
@@ -21,6 +23,7 @@ app.use(session({
 }))
 
 app.use('/users', users.router)
+app.use('/articles', articles.router)
 
 app.use(express.static('views'))
 

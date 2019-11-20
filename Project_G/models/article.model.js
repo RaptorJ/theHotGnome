@@ -8,7 +8,7 @@ var articleSchema = new Schema({
   content: { type: String, required: true },
   date: { type: Date, default: Date.now },
   price: { type: Number, require: true },
-  image: { type: String },
+  image: { type: String, required: false },
   number: { type: Number, require: true },
   comments: [{
     _writer: { type: Schema.Types.ObjectId, ref: 'User' },

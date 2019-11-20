@@ -52,6 +52,7 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   console.log(req.body)
   const { firstname, lastname, username, mail, password, birthday, street, city, postalCode, country } = req.body
+  console.log(req.body)
   if (!(username) || !(mail) || !(password)) {
     res.status(403).send('You did not put enough information!')
   }
@@ -60,6 +61,8 @@ router.post('/register', async (req, res) => {
   const user = await User.findOne({ username: username, mail: mail })
   if (user) {
     res.status(403).send('This username is already taken !')
+    // Alexis
+    // Titi
     return
   }
 
@@ -70,20 +73,23 @@ router.post('/register', async (req, res) => {
       username: username,
       mail: mail,
       password: hash,
-      birthday: birthday,
-      street: street,
-      city: city,
-      postalCode: postalCode,
-      country: country
+      birthDate: birthday,
+      address: {
+        street: street,
+        city: city,
+        postalCode: postalCode,
+        country: country
+      }
     })
     await newUser.save()
-    // res.render('index')
-    res.send('User registered!')
+    console.log(newUser)
+    res.render('index')
+    // res.send('User registered!')
     console.log(`Post register page ${username}`)
     req.session.username = newUser.username
     return
   } catch (err) {
-    res.status(404)
+    res.status(404).render('404')
   }
 })
 
