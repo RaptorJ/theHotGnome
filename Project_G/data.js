@@ -1,5 +1,5 @@
 const fs = require('fs')
-// const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
 const User = require('./models/user.model.js')
 const Article = require('./models/article.model.js')
@@ -46,10 +46,10 @@ async function pushUsers (data) {
       else if (user._role === 'premium') userRole = await Role.findOne({ name: 'premium' })
       else if (user._role === 'user') userRole = await Role.findOne({ name: 'user' })
       else userRole = {}
-      // const hashedPassword = await bcrypt.hash(user.password.toString(), 8)
+      const hashedPassword = await bcrypt.hash(user.password.toString(), 10)
       const newUser = new User({
         username: user.username,
-        password: user.password,
+        password: hashedPassword,
         mail: user.mail,
         birthDate: user.birthDate,
         _role: userRole,
