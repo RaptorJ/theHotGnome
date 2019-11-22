@@ -17,6 +17,7 @@ app.use(bodyParser.json()) // for API requests
 app.use(session({
   name: 'sessId',
   username: undefined,
+  role: undefined,
   cart: [],
   secret: 'myDirtyLittleSecret'
 }))
@@ -28,13 +29,13 @@ app.use(express.static('views'))
 
 app.get('/', (req, res) => {
   console.log('OK')
-  res.render('index')
+  res.render('index', { session: req.session })
   // res.send('ok')
 })
 
 app.get('/500', (req, res) => {
   console.log('En développement')
-  res.render('500')
+  res.render('500', { session: req.session })
   // res.send('ok')
 })
 
