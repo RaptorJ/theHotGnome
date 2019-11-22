@@ -34,6 +34,7 @@ router.post('/login', async (req, res) => {
   } else {
     console.log(`Post login page ${username}`)
     req.session.username = username
+    console.log('connected')
     res.render('index')
   }
 })
