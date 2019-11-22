@@ -2,7 +2,7 @@ const express = require('express')
 var router = express.Router()
 
 const Article = require('../models/article.model')
-
+let availableTag
 router.use(express.static('views'))
 
 router.get('/new', (req, res) => {
@@ -11,7 +11,7 @@ router.get('/new', (req, res) => {
   res.render('newArticle')
 })
 
-// route to get to the article informations
+// Route to get to the article informations
 router.get('/info/:title', async (req, res) => {
   console.log('uptdate article page')
   try {
@@ -23,16 +23,62 @@ router.get('/info/:title', async (req, res) => {
   }
 })
 
-// adding the item to the cart of the user connected
+// Get all item name
+async function getAvailableTags () {
+  const articles = await Article.find({})
+  availableTag.length = 0
+  articles.forEach(async (obj) => {
+    availableTag.push(obj.title)
+  })
+}
+
+router.post('/products', async (req, res) => {
+  /* const availableTags = [
+    'Playstation 4 Pro',
+    'Switch',
+    'Asus Rog',
+    'Death Stranding',
+    'Dark Souls : Par delà la mort',
+    'Cyberpunk 2077',
+    'Tokyo Ghoul',
+    'Goblin Slayer',
+    'Iron Man',
+    'Monster Hunter : Iceborn',
+    'The Legend of Zelda : Breath of the Wild',
+    'The Legend of Zelda : Link\'s Awakening',
+    'Super Smash Bros Ultimate',
+    'Ace Combat 7 : Skies Unknown',
+    'Dark Souls III Design Works',
+    'Dark Souls I & II Design Works',
+    'Bloodborne Artbook officiel',
+    'Dark Souls : de Demon\'s Souls à Sekiro',
+    'Zelda : Hyrule Historia',
+    'Zelda : Art & Artifacs',
+    'Zelda : Encyclopedia',
+    'NieR : Automata World Guide',
+    'Lady Mechanika'
+  ] */
+  getAvailableTags()
+  res.send(availableTag)
+})
+
+// Adding the item to the cart of the user connected
 router.post('/addToCart', async (req, res) => {
-  const { title, seller } = req.body
+  const { id } = req.body
   try {
-    const article = await Article.findOne({ title: title, seller: seller })
+    const article = await Article.findById(id)
     req.session.cart.push(article)
     return
   } catch (err) {
     console.log(err)
     res.status(403).send(err)
+  }
+})
+
+// Removing an item form the cart
+router.post('/removeFromCart', (req, res) => {
+  for (let i = req.session.cart.length - 1; i--;) {
+    if (req.session.cart[i].id === req.param.id) req.session.cart.splice(i, 1)
   }
 })
 
@@ -57,6 +103,7 @@ router.post('/new', async (req, res) => {
       number: number
     })
     await newArticle.save()
+    getAvailableTags()
     res.render('index')
     console.log(`New article successfully added: ${title}`)
     return
@@ -76,6 +123,19 @@ router.post('/update', async (req, res) => {
   }
   const article = await Article.findOne({ title: title })
   res.render('article', { article: article })
+})
+
+// Delete an item from database
+router.post('/deleteItem', async (req, res) => {
+  const { id } = req.body
+  try {
+    await Article.deleteOne({ id: id })
+    getAvailableTags()
+    res.render('index')
+    return
+  } catch (err) {
+    res.status(403).send(err)
+  }
 })
 
 module.exports = {
