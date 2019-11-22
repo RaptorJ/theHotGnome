@@ -2,7 +2,8 @@ const express = require('express')
 var router = express.Router()
 
 const Article = require('../models/article.model')
-let availableTag
+
+let availableTag = []
 router.use(express.static('views'))
 
 router.get('/new', (req, res) => {
@@ -54,7 +55,7 @@ router.post('/addToCart', async (req, res) => {
 
 // Removing an item form the cart
 router.post('/removeFromCart', (req, res) => {
-  for (let i = req.session.cart.length - 1; i--;) {
+  for (let i = 0; i < req.session.cart.length; i--) {
     if (req.session.cart[i].id === req.param.id) req.session.cart.splice(i, 1)
   }
 })
