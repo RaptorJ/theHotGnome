@@ -26,10 +26,14 @@ router.get('/info/:title', async (req, res) => {
 // Get all item name
 async function getAvailableTags () {
   const articles = await Article.find({})
-  availableTag.length = 0
-  articles.forEach(async (obj) => {
+  availableTag = []
+  /* articles.forEach(async (obj) => {
+    availableTag.push(obj.title)
+  }) */
+  await asyncForEach(articles, async (obj) => {
     availableTag.push(obj.title)
   })
+  console.log(availableTag)
 }
 
 router.post('/products', async (req, res) => {
@@ -58,8 +62,9 @@ router.post('/products', async (req, res) => {
     'NieR : Automata World Guide',
     'Lady Mechanika'
   ] */
-  getAvailableTags()
+  await getAvailableTags()
   res.send(availableTag)
+  console.log('availableTag')
 })
 
 // Adding the item to the cart of the user connected
@@ -137,6 +142,12 @@ router.post('/deleteItem', async (req, res) => {
     res.status(403).send(err)
   }
 })
+
+async function asyncForEach (array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
 
 module.exports = {
   router
