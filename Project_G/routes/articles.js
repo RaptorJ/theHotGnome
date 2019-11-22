@@ -26,39 +26,16 @@ router.get('/info/:title', async (req, res) => {
 // Get all item name
 async function getAvailableTags () {
   const articles = await Article.find({})
-  availableTag.length = 0
-  articles.forEach(async (obj) => {
+  availableTag = []
+  await asyncForEach(articles, async (obj) => {
     availableTag.push(obj.title)
   })
+  console.log(availableTag)
 }
 
+// List of product name for search barS
 router.post('/products', async (req, res) => {
-  /* const availableTags = [
-    'Playstation 4 Pro',
-    'Switch',
-    'Asus Rog',
-    'Death Stranding',
-    'Dark Souls : Par delà la mort',
-    'Cyberpunk 2077',
-    'Tokyo Ghoul',
-    'Goblin Slayer',
-    'Iron Man',
-    'Monster Hunter : Iceborn',
-    'The Legend of Zelda : Breath of the Wild',
-    'The Legend of Zelda : Link\'s Awakening',
-    'Super Smash Bros Ultimate',
-    'Ace Combat 7 : Skies Unknown',
-    'Dark Souls III Design Works',
-    'Dark Souls I & II Design Works',
-    'Bloodborne Artbook officiel',
-    'Dark Souls : de Demon\'s Souls à Sekiro',
-    'Zelda : Hyrule Historia',
-    'Zelda : Art & Artifacs',
-    'Zelda : Encyclopedia',
-    'NieR : Automata World Guide',
-    'Lady Mechanika'
-  ] */
-  getAvailableTags()
+  await getAvailableTags()
   res.send(availableTag)
 })
 
@@ -137,6 +114,12 @@ router.post('/deleteItem', async (req, res) => {
     res.status(403).send(err)
   }
 })
+
+async function asyncForEach (array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array)
+  }
+}
 
 module.exports = {
   router
