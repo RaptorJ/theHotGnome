@@ -11,7 +11,7 @@
 
   $(document).ready(function() {
     const parameters = null
-    $.get( '/products',parameters, function(data) {
+    $.post( '/articles/products',parameters, function(data) {
       availableTags = data
     })
   })
