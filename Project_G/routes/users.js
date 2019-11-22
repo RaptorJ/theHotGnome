@@ -58,11 +58,10 @@ router.post('/register', async (req, res) => {
   }
   const hash = await bcrypt.hash(password, 10)
 
-  const user = await User.findOne({ username: username, mail: mail })
+  // We want the username to be unique, not the couple userName/mail
+  const user = await User.findOne({ username: username })
   if (user) {
     res.status(403).send('This username is already taken !')
-    // Alexis
-    // Titi
     return
   }
 
