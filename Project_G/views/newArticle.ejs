@@ -2,12 +2,13 @@
   <head>
     <meta charset="utf-8">
     <title>New Article</title>
-    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="CSS/bootstrap.min.css">
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<script src="JS/bootstrap.min.js"></script>
+    <script src="JS/bootstrap.min.js"></script>-->
+    <%- include('head.ejs')%>
   </head>
 
   <body>
@@ -17,15 +18,14 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-md-6 col-lg-6 col-sm-12 login-background">
           <h2>Nouvel article</h2>
-            <form action="http://localhost:3000/articles/new" method="POST">
-              <input name="seller" type="text" placeholder="Vendeur" />
-              <input name="title" type="text" placeholder="Nom du produit" />
-              <textarea name="content" placeholder="Description"></textarea>
-              <input name="price" type="text" placeholder="Prix" />
-              <input name="number" type="text" placeholder="Stock" />
-              <input type="submit" value="Register" />
-            </form>
-          </div>
+          <form action="http://localhost:3000/articles/new" method="POST">
+            <input name="seller" type="text" placeholder="Vendeur" />
+            <input name="title" type="text" placeholder="Nom du produit" />
+            <textarea name="content" placeholder="Description"></textarea>
+            <input name="price" type="text" placeholder="Prix" />
+            <input name="number" type="text" placeholder="Stock" />
+            <input type="submit" value="Register" />
+          </form>
         </div>
       </div>
     </div>
