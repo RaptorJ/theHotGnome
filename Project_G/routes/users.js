@@ -92,6 +92,41 @@ router.post('/register', async (req, res) => {
   }
 })
 
+/** route for update **/
+
+router.post('update/informations', async (req, res) => {
+  const { mail, birthday, street, city, postalCode, country } = req.body
+  const user = await User.findOne({ username: req.session.username })
+  if (!user) {
+    res.status(403).send('You are not connected!')
+  }
+  try {
+    await User.findOneAndUpdate({ username: req.session.username }, { mail: mail, birthday: birthday, street: street, city: city, postalCode: postalCode, country: country })
+  } catch (err) {
+    res.status(404).send(err)
+  }
+})
+
+router.post('update/password', async (req, res) => {
+  const { oldPassword, newPassword, verifiedPassword } = req.body
+  const user = await User.findOne({ username: req.session.username })
+  if (!user) {
+    res.status(403).send('You are not connected!')
+  }
+  if (req.session.password !== oldPassword) {
+    res.send('Your old password is not correct!')
+  } else {
+    if (newPassword !== verifiedPassword) {
+      res.send('Your new password and your verification password don`t match!')
+    }
+    try {
+      await User.findOneAndUpdate({ username: req.session.username }, { password: newPassword })
+    } catch (err) {
+      res.status(404).send(err)
+    }
+  }
+})
+
 module.exports = {
   router,
   tokenToUserMiddleware
