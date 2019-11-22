@@ -25,16 +25,16 @@ router.post('/buyArticles', async (req, res) => {
     price += element.price
     await Article.findOneAndUpdate({ id: element.id }, { number: element.number-- })
   })
-  const order =  new Order({
+  const order = new Order({
     username: req.session.username,
     articles: req.session.cart,
-    price : price
+    price: price
   })
   await order.save()
   req.session.cart = []
-  res.send(index)
-  }
-})
+  res.send('index')
+}
+)
 
 async function asyncForEach (array, callback) {
   for (let index = 0; index < array.length; index++) {
