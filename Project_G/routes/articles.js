@@ -2,6 +2,7 @@ const express = require('express')
 var router = express.Router()
 
 const Article = require('../models/article.model')
+const Categorie = require('../models/categorie.model')
 
 let availableTag = []
 router.use(express.static('views'))
@@ -62,12 +63,13 @@ router.post('/removeFromCart', (req, res) => {
 
 /** ** creating an article ** **/
 router.post('/new', async (req, res) => {
-  const { seller, title, content, price, number } = req.body
-  if (!(title) || !(seller) || !(content) || !(price) || !(number)) {
+  const { seller, title, content, price, number, categorie } = req.body
+  if (!(title) || !(seller) || !(content) || !(price) || !(number) || !(categorie)) {
     res.status(403).send('You did not put enough information!')
     return
   }
   const article = await Article.findOne({ title: title })
+  const cat = await Categorie.findOne({ name: categorie })
   if (article) {
     res.status(403).send('This item already exist.')
     return
@@ -78,6 +80,7 @@ router.post('/new', async (req, res) => {
       title: title,
       content: content,
       price: price,
+      categories: cat,
       number: number
     })
     await newArticle.save()
