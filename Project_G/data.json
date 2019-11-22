@@ -11,6 +11,14 @@
         }
     ],
 
+    "categories": [
+           { "name": "Jeux video & Console"},
+           { "name": "Papeterie"},
+           { "name": "Informatique" },
+           { "name": "Produit tiers"},
+           { "name": "Autre"}
+    ],
+
     "users": [
         {
             "username": "admin",
@@ -51,6 +59,7 @@
             "price": 299.99,
             "image": "./views/Images/Cart.png",
             "number": 45,
+            "categorie":"Jeux video & Console",
             "comments" : []
         },
         {
@@ -61,6 +70,7 @@
             "price": 259.99,
             "image": "./views/Images/Cart.png",
             "number": 45,
+            "categorie":"Jeux video & Console",
             "comments" : []
         }
     ],
