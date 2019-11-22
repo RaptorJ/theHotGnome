@@ -97,7 +97,8 @@ async function pushOrders (data) {
         })
         const newOrder = new Order({
           username: orderUser.username,
-          articles: orderArticles
+          articles: orderArticles,
+          price: order.price
         })
         await newOrder.save()
         console.log('Order for user ' + order.username + ' registered...')

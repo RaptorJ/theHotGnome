@@ -34,6 +34,7 @@ router.post('/login', async (req, res) => {
   } else {
     console.log(`Post login page ${username}`)
     req.session.username = username
+    console.log('connected')
     res.render('index')
   }
 })
@@ -89,6 +90,36 @@ router.post('/register', async (req, res) => {
     return
   } catch (err) {
     res.status(404).render('404')
+  }
+})
+
+/** route for update **/
+
+router.post('/update/informations', async (req, res) => {
+  const { mail, birthday, street, city, postalCode, country } = req.body
+  try {
+    await User.findOneAndUpdate({ username: req.session.username }, { mail: mail, birthday: birthday, street: street, city: city, postalCode: postalCode, country: country })
+    return
+  } catch (err) {
+    res.status(404).send(err)
+  }
+})
+
+router.post('/update/password', async (req, res) => {
+  const { oldPassword, newPassword, verifiedPassword } = req.body
+  const user = await User.findOne({ username: req.session.username })
+  if (user.password !== oldPassword) {
+    res.send('Your old password is not correct!')
+  } else {
+    if (newPassword !== verifiedPassword) {
+      res.send('Your new password and your verification password don`t match!')
+    }
+    try {
+      await User.findOneAndUpdate({ username: req.session.username }, { password: newPassword })
+      return
+    } catch (err) {
+      res.status(404).send(err)
+    }
   }
 })
 
