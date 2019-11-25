@@ -7,10 +7,16 @@ const Categorie = require('../models/categorie.model')
 let availableTag = []
 router.use(express.static('views'))
 
-router.get('/new', (req, res) => {
+router.get('/new', async (req, res) => {
   // Verify that user is admin -> todo
   console.log('Get new article page')
-  res.render('newArticle')
+  const categories = await Categorie.find({})
+  availableTag = []
+  await asyncForEach(categories, async (obj) => {
+    availableTag.push(obj.name)
+  })
+  console.log('Available tag : ' + availableTag)
+  res.render('newArticle', { session: req.session, availableTag: availableTag })
 })
 
 // Route to get to the article informations
