@@ -35,16 +35,32 @@
             </a>
           </div>
           <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
+            <% if (!session || !session.role || session.role!='admin') { %>
             <a href="#">
               <img id="Cart" src="Images/Cart.png" alt="Cart" width="50" height="50">
               Cart
             </a>
+            <% } else {%>
+              <a href="#">
+                  <img id="Cart" src="Images/Cart.png" alt="Cart" width="50" height="50">
+                  +Product
+                </a>
+            <% } %>
           </div>
           <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
+            <% if (!session || !session.username) { %>
             <a href="http://localhost:3000/users/login">
               <img id="Login" src="Images/User.png" alt="Login" width="50" height="50">
               Login
             </a>
+            <% } else {%>
+              <% const html = `<a href="http://localhost:3000/users/userInfo?username=${session.username}">` %>
+              <%- html %>
+              <!--<a href="http://localhost:3000/users/userInfo>-->
+                <img id="Login" src="Images/User.png" alt="Logout" width="50" height="50">
+                <%= session.username %>
+              </a>
+            <% } %>
           </div>
         </div>
       </div>

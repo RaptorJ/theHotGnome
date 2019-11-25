@@ -2,13 +2,21 @@ const express = require('express')
 var router = express.Router()
 
 const Article = require('../models/article.model')
-let availableTag
+const Categorie = require('../models/categorie.model')
+
+let availableTag = []
 router.use(express.static('views'))
 
-router.get('/new', (req, res) => {
+router.get('/new', async (req, res) => {
   // Verify that user is admin -> todo
   console.log('Get new article page')
-  res.render('newArticle')
+  const categories = await Categorie.find({})
+  availableTag = []
+  await asyncForEach(categories, async (obj) => {
+    availableTag.push(obj.name)
+  })
+  console.log('Available tag : ' + availableTag)
+  res.render('newArticle', { session: req.session, availableTag: availableTag })
 })
 
 // Route to get to the article informations
@@ -54,19 +62,20 @@ router.post('/addToCart', async (req, res) => {
 
 // Removing an item form the cart
 router.post('/removeFromCart', (req, res) => {
-  for (let i = req.session.cart.length - 1; i--;) {
+  for (let i = 0; i < req.session.cart.length; i--) {
     if (req.session.cart[i].id === req.param.id) req.session.cart.splice(i, 1)
   }
 })
 
 /** ** creating an article ** **/
 router.post('/new', async (req, res) => {
-  const { seller, title, content, price, number } = req.body
-  if (!(title) || !(seller) || !(content) || !(price) || !(number)) {
+  const { seller, title, content, price, number, categorie } = req.body
+  if (!(title) || !(seller) || !(content) || !(price) || !(number) || !(categorie)) {
     res.status(403).send('You did not put enough information!')
     return
   }
   const article = await Article.findOne({ title: title })
+  const cat = await Categorie.findOne({ name: categorie })
   if (article) {
     res.status(403).send('This item already exist.')
     return
@@ -77,6 +86,7 @@ router.post('/new', async (req, res) => {
       title: title,
       content: content,
       price: price,
+      categories: cat,
       number: number
     })
     await newArticle.save()
