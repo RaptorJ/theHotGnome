@@ -12,7 +12,7 @@ router.get('/new', (req, res) => {
 
 // Buy all the article in the cart & generating the order
 router.post('/buyArticles', async (req, res) => {
-  for (let i = 0; i < req.session.cart.length; i--) {
+  for (let i = 0; i < req.session.cart.length; i++) {
     if (req.session.cart[i].number === 0) {
       req.session.cart.splice(i, 1)
       console.log('"' + req.session.cart[i].title + '" is out of stock')
