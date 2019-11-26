@@ -20,23 +20,9 @@
           <h2>Error 404</h2>
           <img src="Images/404.gif" alt="404" width="100%">
           <br>
-          <center><p>Your username or pasword is incorrect !</p></center>
-        </div>
-      </div>
-      <div class="row justify-content-center align-items-center">
-        <div class="col-md-3 col-lg-3 col-sm-12 login-background">
-          <h2>Login</h2>
-          <form action="http://localhost:3000/users/login" method="POST">
-            <input name="username" type="text" placeholder="Identifiant" />
-            <input name="password" type="password" placeholder="Mot de passe" />
-            <input type="submit" value="Login" />
-          </form>
-          <p>Vous n'avez pas de compte ? <a href="http://localhost:3000/users/register">Créez le votre !</a></p>
         </div>
       </div>
     </div>
-    
-
     <%- include('footer.ejs')%>
   </body>
 </html>

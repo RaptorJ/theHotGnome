@@ -17,7 +17,7 @@ async function tokenToUserMiddleware (req, res, next) {
 /** ** route for log ** **/
 router.get('/login', (req, res) => {
   console.log('Get login page')
-  res.render('login', { session: req.session })
+  res.render('login', { session: req.session, error: undefined })
 })
 
 router.post('/login', async (req, res) => {
