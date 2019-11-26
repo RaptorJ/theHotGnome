@@ -12,10 +12,10 @@
     ],
 
     "categories": [
-           { "name": "Jeux video & Console"},
+           { "name": "Jeux_video_Console"},
            { "name": "Papeterie"},
            { "name": "Informatique" },
-           { "name": "Produit tiers"},
+           { "name": "Produit_tiers"},
            { "name": "Autre"}
     ],
 

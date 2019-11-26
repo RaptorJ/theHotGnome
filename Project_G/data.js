@@ -27,6 +27,7 @@ fs.readFile('./data.json', 'utf8', async (err, jsonString) => {
 })
 async function pushCategories (data) {
   await asyncForEach(data.categories, async (cat) => {
+    console.log(cat.name)
     try {
       if (!await Categorie.findOne({ name: cat.name })) {
         const newCat = new Categorie({

@@ -48,6 +48,7 @@ router.get('/getArticle', async (req, res) => {
 
 router.post('/getArticleList', async (req, res) => {
   let article = await Article.findOne({ title: req.body.title })
+  console.log(req.body.title)
   if (article) {
     res.render('viewArticle', { session: req.session, article: article })
   } else {
