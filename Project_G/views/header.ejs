@@ -14,13 +14,17 @@
       
       <div class="col-md-5 col-ld-5 col-ms-12 col-xs-12">
         <!--<h2>Search Bar</h2>-->
-        <div class="input-group md-form form-sm form-2 pl-0">
-          <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Je recherche..." aria-label="Search">
+        <!--<div class="input-group md-form form-sm form-2 pl-0">
+          <input class="form-control my-0 py-1 amber-border" id="tags" type="text" placeholder="Je recherche..." aria-label="Search">
           <div class="input-group-append">
             <span class="input-group-text amber lighten-3" id="basic-text1"><i class="fas fa-search"
                 aria-hidden="true"></i></span>
           </div>
-        </div>
+        </div>-->
+        <form class="input-group md-form form-sm form-2 pl-0" action="http://localhost:3000/500">
+          <input class="form-control my-0 py-1 amber-border" id="tags" type="text" placeholder="Je recherche..." aria-label="Search">
+          <input type="submit">
+        </form>
       </div>
       <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
         <div class="row align-items-center">
@@ -31,16 +35,32 @@
             </a>
           </div>
           <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
+            <% if (!session || !session.role || session.role!='admin') { %>
             <a href="#">
               <img id="Cart" src="Images/Cart.png" alt="Cart" width="50" height="50">
               Cart
             </a>
+            <% } else {%>
+              <a href="#">
+                  <img id="Cart" src="Images/Cart.png" alt="Cart" width="50" height="50">
+                  +Product
+                </a>
+            <% } %>
           </div>
           <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
+            <% if (!session || !session.username) { %>
             <a href="http://localhost:3000/users/login">
               <img id="Login" src="Images/User.png" alt="Login" width="50" height="50">
               Login
             </a>
+            <% } else {%>
+              <% const html = `<a href="http://localhost:3000/users/userInfo?username=${session.username}">` %>
+              <%- html %>
+              <!--<a href="http://localhost:3000/users/userInfo>-->
+                <img id="Login" src="Images/User.png" alt="Logout" width="50" height="50">
+                <%= session.username %>
+              </a>
+            <% } %>
           </div>
         </div>
       </div>

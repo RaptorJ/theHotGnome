@@ -4,7 +4,6 @@ const users = require('./routes/users.js')
 const articles = require('./routes/articles.js')
 var app = express()
 const path = require('path')
-// coucou
 const bodyParser = require('body-parser') // pour parser les requêtes POST
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/theHotGnome')
@@ -15,11 +14,12 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false })) // for simple form posts
 app.use(bodyParser.json()) // for API requests
 
-// app.use(favicon(path.join(__dirname, 'views', 'Images', 'icon.ico'))) // Not working
-
 app.use(session({
   name: 'sessId',
-  username: undefined
+  username: undefined,
+  role: undefined,
+  cart: [],
+  secret: 'myDirtyLittleSecret'
 }))
 
 app.use('/users', users.router)
@@ -29,7 +29,13 @@ app.use(express.static('views'))
 
 app.get('/', (req, res) => {
   console.log('OK')
-  res.render('index')
+  res.render('index', { session: req.session })
+  // res.send('ok')
+})
+
+app.get('/500', (req, res) => {
+  console.log('En développement')
+  res.render('500', { session: req.session })
   // res.send('ok')
 })
 

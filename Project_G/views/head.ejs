@@ -1,0 +1,67 @@
+<link rel="stylesheet" href="CSS/bootstrap.min.css">
+<link rel="stylesheet" href="CSS/style.css">
+<link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="JS/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript">
+  var availableTags
+
+  $(document).ready(function() {
+    const parameters = null
+    $.post( '/articles/products',parameters, function(data) {
+      availableTags = data
+    })
+  })
+
+  $( function() {
+    /*var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme",
+      "Playstation 4 Pro",
+      "Switch",
+      "Asus Rog",
+      "Death Stranding",
+      "Dark Souls : Par delà la mort"
+    ];*/
+    $( "#tags" ).autocomplete({
+      //source: availableTags
+      source: function (request, response) {
+          var term = $.ui.autocomplete.escapeRegex(request.term)
+              , startsWithMatcher = new RegExp("^" + term, "i")
+              , startsWith = $.grep(availableTags, function(value) {
+                  return startsWithMatcher.test(value.label || value.value || value);
+              })
+              , containsMatcher = new RegExp(term, "i")
+              , contains = $.grep(availableTags, function (value) {
+                  return $.inArray(value, startsWith) < 0 &&
+                      containsMatcher.test(value.label || value.value || value);
+              });
+
+          response(startsWith.concat(contains));
+      }
+    });
+  } );
+</script>

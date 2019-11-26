@@ -10,6 +10,7 @@ var articleSchema = new Schema({
   price: { type: Number, require: true },
   image: { type: String, required: false },
   number: { type: Number, require: true },
+  categories: { type: Schema.Types.ObjectId, ref: 'Categorie' },
   comments: [{
     _writer: { type: Schema.Types.ObjectId, ref: 'User' },
     content: { type: String, required: true },
