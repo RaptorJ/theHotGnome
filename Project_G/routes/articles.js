@@ -113,11 +113,11 @@ router.post('/new', async (req, res) => {
     })
     await newArticle.save()
     getAvailableTags()
-    res.render('index')
+    res.render('index', { session: req.session })
     console.log(`New article successfully added: ${title}`)
     return
   } catch (err) {
-    res.status(404).render('404')
+    res.status(404).render('404', { session: req.session })
   }
 })
 
@@ -149,13 +149,15 @@ router.post('/deleteItem', async (req, res) => {
 
 router.get('/productsType', async (req, res) => {
   const type = req.query.type
+  console.log(type)
   if (!type) {
     res.render('404', { session: req.session })
     return
   }
   const categorieId = await Categorie.findOne({ name: type })
-  const articles = await Article.find({ categorie: categorieId })
-  console.log(articles)
+  console.log(categorieId)
+  const articles = await Article.find({ categories: categorieId })
+  console.log('articles: ' + articles)
   // res.send(articles)
   res.render('viewArticleList', { session: req.session, articles: articles })
 })

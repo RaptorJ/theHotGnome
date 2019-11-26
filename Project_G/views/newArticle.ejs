@@ -21,6 +21,11 @@
           <form action="http://localhost:3000/articles/new" method="POST">
             <input name="seller" type="text" placeholder="Vendeur" />
             <input name="title" type="text" placeholder="Nom du produit" />
+            <select name="categorie" aria-placeholder="Choisissez une catégorie">
+              <% availableTag.forEach(tag => { %>
+                <option value="<%= tag %>"><%= tag %></option>
+              <% }) %>
+            </select>
             <textarea name="content" placeholder="Description"></textarea>
             <input name="price" type="text" placeholder="Prix" />
             <input name="number" type="text" placeholder="Stock" />
