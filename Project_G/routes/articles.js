@@ -53,7 +53,7 @@ router.post('/getArticleList', async (req, res) => {
   } else {
     const availableItemId = []
     await asyncForEach(availableTag, async (obj) => {
-      if (obj.search('.[' + req.title + '].')) {
+      if (obj.search('.[' + req.body.title + '].')) {
         article = await Article.findOne({ title: obj.title })
         availableItemId.push(obj.id)
       }
