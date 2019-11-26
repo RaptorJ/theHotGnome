@@ -70,11 +70,12 @@ router.post('/products', async (req, res) => {
 })
 
 // Adding the item to the cart of the user connected
-router.post('/addToCart', async (req, res) => {
-  const { id } = req.body
+router.get('/addToCart', async (req, res) => {
+  const id = req.query.id
   try {
     const article = await Article.findById(id)
     req.session.cart.push(article)
+    res.render('index', { session: req.session })
     return
   } catch (err) {
     console.log(err)
@@ -85,7 +86,7 @@ router.post('/addToCart', async (req, res) => {
 // Removing an item form the cart
 router.post('/removeFromCart', (req, res) => {
   for (let i = 0; i < req.session.cart.length; i--) {
-    if (req.session.cart[i].id === req.param.id) req.session.cart.splice(i, 1)
+    if (req.session.cart[i].id === req.params.id) req.session.cart.splice(i, 1)
   }
 })
 

@@ -95,6 +95,7 @@ async function pushArticles (data) {
           date: article.date,
           price: article.price,
           image: article.image,
+          number: article.number,
           categories: articleCat,
           comments: article.comments
         })

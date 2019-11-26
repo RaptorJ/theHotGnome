@@ -17,8 +17,14 @@
 
     <div class="container-fluid">
       <div class="row justify-content-center align-items-center">
-        <div class="col-md-10 col-lg-10 col-sm-12">
-          
+          <div class="col-md-3 col-lg-3 col-sm-12 login-background">
+            <h2>Article informations</h2>
+            <%= article.seller %><br/>
+            <%= article.title %><br/>
+            <%= article.content %><br/>
+            <%= article.price %><br/>
+            <%= article.number %><br/>
+            <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a><br/>          
         </div>
       </div>
     </div>
