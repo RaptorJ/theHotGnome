@@ -57,7 +57,7 @@
             "content": "Ceci est un test pour un article",
             "date": "2019-11-12T14:18:18.834+00:00",
             "price": 299.99,
-            "image": "./views/Images/Cart.png",
+            "image": "https://d1eh9yux7w8iql.cloudfront.net/product_images/1552486432.53.jpg",
             "number": 45,
             "categorie":"Jeux video & Console",
             "comments" : []
@@ -68,7 +68,7 @@
             "content": "Ceci est un test pour un article",
             "date": "2019-11-12T14:18:18.834+00:00",
             "price": 299.99,
-            "image": "./views/Images/Cart.png",
+            "image": "https://cdn.easycash.fr/img/prod/0/0/1/8/8/0/3/7/5/prod_900x650/1815644-sony-ps2-noir-1-manette.jpg",
             "number": 45,
             "categorie":"Jeux video & Console",
             "comments" : []
@@ -79,7 +79,7 @@
             "content": "Ceci est un second test pour un article",
             "date": "2019-11-12T14:18:18.834+00:00",
             "price": 259.99,
-            "image": "./views/Images/Cart.png",
+            "image": "https://cdn.easycash.fr/img/prod/0/0/3/1/0/8/5/8/8/prod_400x290/5191024-microsoft-xbox-one-x-noir-1-to-1-manette.jpg",
             "number": 45,
             "categorie":"Jeux video & Console",
             "comments" : []
