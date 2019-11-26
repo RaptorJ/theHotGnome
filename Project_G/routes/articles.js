@@ -15,7 +15,6 @@ router.get('/new', async (req, res) => {
   await asyncForEach(categories, async (obj) => {
     availableTag.push(obj.name)
   })
-  console.log('Available tag : ' + availableTag)
   res.render('newArticle', { session: req.session, availableTag: availableTag })
 })
 
@@ -24,7 +23,7 @@ router.get('/info/:title', async (req, res) => {
   console.log('uptdate article page')
   try {
     const article = await Article.findOne({ title: req.param.title })
-    res.render('article', { article: article })
+    res.render('article', { session: req.session, article: article })
     return
   } catch (err) {
     res.status(403).send(err)
@@ -41,6 +40,29 @@ async function getAvailableTags () {
   console.log(availableTag)
 }
 
+router.get('/getArticle', async (req, res) => {
+  const article = await Article.findById(req.query.id)
+  console.log('get article ' + article.title)
+  res.render('viewArticle', { session: req.session, article: article })
+})
+
+router.post('/getArticleList', async (req, res) => {
+  let article = await Article.findOne({ title: req.body.title })
+  if (article) {
+    res.render('viewArticle', { session: req.session, article: article })
+  } else {
+    const availableItemId = []
+    const str = req.body.title.toLowerCase()
+    await asyncForEach(availableTag, async (obj) => {
+      if (obj.toLowerCase().indexOf(str) >= 0) {
+        article = await Article.findOne({ title: obj })
+        availableItemId.push(article)
+      }
+    })
+    res.render('viewArticleList', { session: req.session, articles: availableItemId })
+  }
+})
+
 // List of product name for search barS
 router.post('/products', async (req, res) => {
   await getAvailableTags()
@@ -48,11 +70,12 @@ router.post('/products', async (req, res) => {
 })
 
 // Adding the item to the cart of the user connected
-router.post('/addToCart', async (req, res) => {
-  const { id } = req.body
+router.get('/addToCart', async (req, res) => {
+  const id = req.query.id
   try {
     const article = await Article.findById(id)
     req.session.cart.push(article)
+    res.render('index', { session: req.session })
     return
   } catch (err) {
     console.log(err)
@@ -63,7 +86,7 @@ router.post('/addToCart', async (req, res) => {
 // Removing an item form the cart
 router.post('/removeFromCart', (req, res) => {
   for (let i = 0; i < req.session.cart.length; i--) {
-    if (req.session.cart[i].id === req.param.id) req.session.cart.splice(i, 1)
+    if (req.session.cart[i].id === req.params.id) req.session.cart.splice(i, 1)
   }
 })
 
@@ -123,6 +146,19 @@ router.post('/deleteItem', async (req, res) => {
   } catch (err) {
     res.status(403).send(err)
   }
+})
+
+router.get('/productsType', async (req, res) => {
+  const type = req.query.type
+  if (!type) {
+    res.render('404', { session: req.session })
+    return
+  }
+  const categorieId = await Categorie.findOne({ name: type })
+  const articles = await Article.find({ categorie: categorieId })
+  console.log(articles)
+  // res.send(articles)
+  res.render('viewArticleList', { session: req.session, articles: articles })
 })
 
 async function asyncForEach (array, callback) {

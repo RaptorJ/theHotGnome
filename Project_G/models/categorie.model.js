@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 var categorieSchema = new Schema({
   name: {
     type: String,
-    enum: ['Jeux video & Console', 'Papeterie', 'Informatique', 'Produit tiers', 'Autre']
+    enum: ['Jeux_video_Console', 'Papeterie', 'Informatique', 'Produit_tiers', 'Autre']
   }
 })
 

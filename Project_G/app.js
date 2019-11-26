@@ -18,7 +18,7 @@ app.use(session({
   name: 'sessId',
   username: undefined,
   role: undefined,
-  cart: [],
+  cart: undefined,
   secret: 'myDirtyLittleSecret'
 }))
 

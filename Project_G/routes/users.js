@@ -42,6 +42,7 @@ router.post('/login', async (req, res) => {
     console.log(`Post login page ${username}`)
     req.session.username = username
     req.session.role = role.name
+    req.session.cart = []
     console.log(req.session)
     res.render('index', { session: req.session })
   }
