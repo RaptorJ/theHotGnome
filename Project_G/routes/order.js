@@ -10,6 +10,12 @@ router.get('/new', (req, res) => {
   res.render('newArticle')
 })
 
+router.get('/getArticle', async (req, res) => {
+  const article = await Article.findById(req.param.id)
+  console.log('get article ' + article.name)
+  res.render('viewArticle', { article: article })
+})
+
 // Buy all the article in the cart & generating the order
 router.post('/buyArticles', async (req, res) => {
   for (let i = 0; i < req.session.cart.length; i++) {
