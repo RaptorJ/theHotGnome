@@ -48,14 +48,14 @@ router.get('/getArticle', async (req, res) => {
 
 router.post('/getArticleList', async (req, res) => {
   let article = await Article.findOne({ title: req.body.title })
-  console.log(req.body.title)
   if (article) {
     res.render('viewArticle', { session: req.session, article: article })
   } else {
     const availableItemId = []
+    const str = req.body.title.toLowerCase()
     await asyncForEach(availableTag, async (obj) => {
-      if (obj.search('.[' + req.body.title + '].')) {
-        article = await Article.findOne({ title: obj.title })
+      if (obj.toLowerCase().indexOf(str) >= 0) {
+        article = await Article.findOne({ title: obj })
         availableItemId.push(article)
       }
     })

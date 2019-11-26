@@ -64,6 +64,17 @@
         },
         {
             "seller": "Fnac",
+            "title": "PS2 Prestige edition",
+            "content": "Ceci est un test pour un article",
+            "date": "2019-11-12T14:18:18.834+00:00",
+            "price": 299.99,
+            "image": "./views/Images/Cart.png",
+            "number": 45,
+            "categorie":"Jeux video & Console",
+            "comments" : []
+        },
+        {
+            "seller": "Fnac",
             "title": "XBox One X",
             "content": "Ceci est un second test pour un article",
             "date": "2019-11-12T14:18:18.834+00:00",
