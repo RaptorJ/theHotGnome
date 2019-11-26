@@ -5,6 +5,7 @@ const User = require('./models/user.model.js')
 const Article = require('./models/article.model.js')
 const Role = require('./models/role.model.js')
 const Order = require('./models/order.model.js')
+const Categorie = require('./models/categorie.model')
 mongoose.connect('mongodb://localhost/theHotGnome')
 
 fs.readFile('./data.json', 'utf8', async (err, jsonString) => {
@@ -13,6 +14,7 @@ fs.readFile('./data.json', 'utf8', async (err, jsonString) => {
   }
   try {
     const data = JSON.parse(jsonString)
+    await pushCategories(data)
     await pushRoles(data)
     await pushUsers(data)
     await pushArticles(data)
@@ -23,6 +25,21 @@ fs.readFile('./data.json', 'utf8', async (err, jsonString) => {
     console.log('Error parsing JSON string', err)
   }
 })
+async function pushCategories (data) {
+  await asyncForEach(data.categories, async (cat) => {
+    try {
+      if (!await Categorie.findOne({ name: cat.name })) {
+        const newCat = new Categorie({
+          name: cat.name
+        })
+        await newCat.save()
+        console.log('Categorie ' + cat.name + ' registered...')
+      } else console.log('Warning: Categorie ' + cat.name + ' already exists!')
+    } catch (err) {
+      console.log('Error while registering categorie: ', err)
+    }
+  })
+}
 
 async function pushRoles (data) {
   await asyncForEach(data.roles, async (role) => {
@@ -67,6 +84,8 @@ async function pushArticles (data) {
   await asyncForEach(data.articles, async (article) => {
     try {
       const existingArticle = await Article.findOne({ title: article.title })
+      const articleCat = await Categorie.findOne({ name: article.categorie })
+      console.log(article.categorie)
       if (!(existingArticle && existingArticle.seller === article.seller)) {
         const newArticle = new Article({
           seller: article.seller,
@@ -75,6 +94,7 @@ async function pushArticles (data) {
           date: article.date,
           price: article.price,
           image: article.image,
+          categories: articleCat,
           comments: article.comments
         })
         await newArticle.save()
