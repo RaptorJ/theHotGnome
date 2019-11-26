@@ -15,7 +15,6 @@ router.get('/new', async (req, res) => {
   await asyncForEach(categories, async (obj) => {
     availableTag.push(obj.name)
   })
-  console.log('Available tag : ' + availableTag)
   res.render('newArticle', { session: req.session, availableTag: availableTag })
 })
 
@@ -40,6 +39,28 @@ async function getAvailableTags () {
   })
   console.log(availableTag)
 }
+
+router.get('/getArticle', async (req, res) => {
+  const article = await Article.findById(req.param.id)
+  console.log('get article ' + article.name)
+  res.render('viewArticle', { article: article })
+})
+
+router.post('/getArticleList', async (req, res) => {
+  let article = await Article.findOne({ title: req.body.title })
+  if (article) {
+    res.send('viewArticle', { article: article })
+  } else {
+    const availableItemId = []
+    await asyncForEach(availableTag, async (obj) => {
+      if (obj.search('.[' + req.body.title + '].')) {
+        article = await Article.findOne({ title: obj.title })
+        availableItemId.push(obj.id)
+      }
+    })
+    res.render('viewArticleList', { idList: availableItemId })
+  }
+})
 
 // List of product name for search barS
 router.post('/products', async (req, res) => {
