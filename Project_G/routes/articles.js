@@ -37,19 +37,19 @@ async function getAvailableTags () {
   await asyncForEach(articles, async (obj) => {
     availableTag.push(obj.title)
   })
-  console.log(availableTag)
+  // console.log(availableTag)
 }
 
 router.get('/getArticle', async (req, res) => {
   const article = await Article.findById(req.query.id)
   console.log('get article ' + article.title)
-  res.render('viewArticle', { session: req.session, article: article })
+  res.render('viewArticle2', { session: req.session, article: article })
 })
 
 router.post('/getArticleList', async (req, res) => {
   let article = await Article.findOne({ title: req.body.title })
   if (article) {
-    res.render('viewArticle', { session: req.session, article: article })
+    res.render('viewArticle2', { session: req.session, article: article })
   } else {
     const availableItemId = []
     const str = req.body.title.toLowerCase()
@@ -75,6 +75,7 @@ router.get('/addToCart', async (req, res) => {
   try {
     const article = await Article.findById(id)
     req.session.cart.push(article)
+    console.log('Cart: ' + req.session.cart)
     res.render('index', { session: req.session })
     return
   } catch (err) {
@@ -92,7 +93,7 @@ router.post('/removeFromCart', (req, res) => {
 
 /** ** creating an article ** **/
 router.post('/new', async (req, res) => {
-  const { seller, title, content, price, number, categorie } = req.body
+  const { seller, title, content, price, number, categorie, image } = req.body
   if (!(title) || !(seller) || !(content) || !(price) || !(number) || !(categorie)) {
     res.status(403).send('You did not put enough information!')
     return
@@ -109,6 +110,7 @@ router.post('/new', async (req, res) => {
       title: title,
       content: content,
       price: price,
+      image: image,
       categories: cat,
       number: number
     })

@@ -205,7 +205,7 @@ footer h3{
   margin-top: 2px;
   list-style: none;
   background-color: #ffffff;
-  border: 1px solid #ccc
+  border: 1px solid #ccc;
   -webkit-border-radius: 5px;
      -moz-border-radius: 5px;
           border-radius: 5px;
@@ -229,9 +229,55 @@ display: none;
 /*END SEARCH BAR*/
 
 .article-list{
-  background-color: white;
+  background-color: lightgrey;
 }
 
-.article-list div{
-  border: 1px solid black;
+.article-list div{  
+  background-color: white;
+  margin-top: 5px;
 }
+
+.article-list div img{
+  width: 100%;
+}
+
+.article-list .content{
+  padding-left: 50px;
+}
+
+/*ARRTICLE PAGE*/
+.imarticle{
+  width: 100%;
+}
+
+.article-description{
+  margin-top: 10px;
+  text-align: justify;
+}
+
+.article-description p{
+  text-align: justify;
+  margin-right: 30px;
+  margin-top: 40px;
+}
+
+.article-price{
+  text-align: justify;
+}
+
+.article-description button{
+  border-radius: 5px;
+  height: 40px;
+  border: none;
+  background-color: #2A2A2A;
+  color: orange;
+  transition: all 0.6s
+}
+
+.article-description button:hover{
+  border: none;
+  background-color: orange;
+  color: #2A2A2A;
+  transition: all 0.6s
+}
+/*END ARTICLE PAGE*/
