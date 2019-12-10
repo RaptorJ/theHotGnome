@@ -2,6 +2,7 @@ const express = require('express')
 var router = express.Router()
 
 const Article = require('../models/article.model')
+const User = require('../models/user.model')
 const Categorie = require('../models/categorie.model')
 
 let availableTag = []
@@ -76,7 +77,8 @@ router.get('/addToCart', async (req, res) => {
     const article = await Article.findById(id)
     req.session.cart.push(article)
     console.log('Cart: ' + req.session.cart)
-    res.render('index', { session: req.session })
+    res.redirect('cart')
+    // res.render('index', { session: req.session })
     return
   } catch (err) {
     console.log(err)
@@ -84,10 +86,14 @@ router.get('/addToCart', async (req, res) => {
   }
 })
 
+router.get('/cart', (req, res) => {
+  res.render('cart', { session: req.session, articles: req.session.cart })
+})
+
 // Removing an item form the cart
 router.post('/removeFromCart', (req, res) => {
-  for (let i = 0; i < req.session.cart.length; i--) {
-    if (req.session.cart[i].id === req.params.id) req.session.cart.splice(i, 1)
+  for (let i = 0; i < req.session.cart.length; i++) {
+    if (req.session.cart[i].id === req.query.id) req.session.cart.splice(i, 1)
   }
 })
 
@@ -163,6 +169,27 @@ router.get('/productsType', async (req, res) => {
   console.log('articles: ' + articles)
   // res.send(articles)
   res.render('viewArticleList', { session: req.session, articles: articles })
+})
+
+router.post('/addComment', async (req, res) => {
+  const { id, content } = req.body
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('../users/login')
+  } else {
+    const writter = User.findOne({ username: req.session.username })
+    const comment = {
+      _writer: writter._id,
+      content: content
+    }
+    const article = await Article.findById(id)
+    if (!article.comments) {
+      article.comments = []
+    }
+    article.comments.push(comment)
+    console.log(article)
+    await article.save()
+  }
+  res.render('index', { session: req.session })
 })
 
 async function asyncForEach (array, callback) {
