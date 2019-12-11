@@ -232,7 +232,7 @@ display: none;
   background-color: lightgrey;
 }
 
-.article-list div{  
+.article-list div, .article-list a{  
   background-color: white;
   margin-top: 5px;
 }

@@ -10,13 +10,17 @@ router.use(express.static('views'))
 
 router.get('/new', async (req, res) => {
   // Verify that user is admin -> todo
-  console.log('Get new article page')
-  const categories = await Categorie.find({})
-  availableTag = []
-  await asyncForEach(categories, async (obj) => {
-    availableTag.push(obj.name)
-  })
-  res.render('newArticle', { session: req.session, availableTag: availableTag })
+  if (!req.session.role || req.session.role !== 'admin') {
+    res.redirect('cart')
+  } else {
+    console.log('Get new article page')
+    const categories = await Categorie.find({})
+    availableTag = []
+    await asyncForEach(categories, async (obj) => {
+      availableTag.push(obj.name)
+    })
+    res.render('newArticle', { session: req.session, availableTag: availableTag })
+  }
 })
 
 // Route to get to the article informations
@@ -73,16 +77,21 @@ router.post('/products', async (req, res) => {
 // Adding the item to the cart of the user connected
 router.get('/addToCart', async (req, res) => {
   const id = req.query.id
-  try {
-    const article = await Article.findById(id)
-    req.session.cart.push(article)
-    console.log('Cart: ' + req.session.cart)
-    res.redirect('cart')
-    // res.render('index', { session: req.session })
-    return
-  } catch (err) {
-    console.log(err)
-    res.status(403).send(err)
+  if (!req.session.username || req.session.username === '') {
+    req.session.urlorigin = `/articles/addToCart?id=${id}`
+    res.redirect('../users/login')
+  } else {
+    try {
+      const article = await Article.findById(id)
+      req.session.cart.push(article)
+      console.log('Cart: ' + req.session.cart)
+      res.redirect('cart')
+      // res.render('index', { session: req.session })
+      return
+    } catch (err) {
+      console.log(err)
+      res.status(403).send(err)
+    }
   }
 })
 
@@ -91,10 +100,12 @@ router.get('/cart', (req, res) => {
 })
 
 // Removing an item form the cart
-router.post('/removeFromCart', (req, res) => {
+// Change from POST to GET
+router.get('/removeFromCart', (req, res) => {
   for (let i = 0; i < req.session.cart.length; i++) {
-    if (req.session.cart[i].id === req.query.id) req.session.cart.splice(i, 1)
+    if (req.session.cart[i]._id === req.query.id) req.session.cart.splice(i, 1)
   }
+  res.redirect('cart')
 })
 
 /** ** creating an article ** **/
@@ -174,6 +185,7 @@ router.get('/productsType', async (req, res) => {
 router.post('/addComment', async (req, res) => {
   const { id, content } = req.body
   if (!req.session.username || req.session.username === '') {
+    req.session.urlorigin = `/articles/getArticle?id=${id}`
     res.redirect('../users/login')
   } else {
     const writter = User.findOne({ username: req.session.username })

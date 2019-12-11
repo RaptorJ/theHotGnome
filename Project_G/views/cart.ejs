@@ -20,24 +20,32 @@
                 </div>
               </div>
             <% } else { %>
-            <% articles.forEach(article => { %>
-                <a class="row article-list" href="http://localhost:3000/articles/getArticle?id=<%= article._id %>">
+              <div class="row article-list" >
+                <% let total = 0 %>
+                <% articles.forEach(article => { %>
                   <div class="col-md-2 col-lg- col-sm-12">
                     <% if (article.image) { %>
                       <img src="<%= article.image %>">
                     <% } else { %>
                       <img src="https://d1eh9yux7w8iql.cloudfront.net/product_images/1552486432.53.jpg?fbclid=IwAR1nSRaFRARSm5HtIFyge18TBXMKq5ViyWoq49ObnIck80Gctm9Nmeo0wtg">
                     <% } %>
-                    </div>
-                  <div class="col-md-8 col-lg-8 col-sm-12 content">
+                  </div>
+                  <a class="col-md-8 col-lg-8 col-sm-12 content" href="http://localhost:3000/articles/getArticle?id=<%= article._id %>">
                     <h4><%= article.title %></h4>
                     <h6><%= article.seller %></h6>
                     <p><%= article.content %></p>
+                  </a>
+                  <div class="col-md-2 col-lg-2 col-sm-12">
+                    <h4><%= article.price %>€</h4>
+                    <% total += article.price %>
+                    <p>Prix adhérent <%= (article.price - article.price * 0.05).toFixed(2) %> € </p>
+                    <a href="http://localhost:3000/articles/getArticle?id=<%= article._id %>"><button>Consulter</button></a>
+                    <a href="http://localhost:3000/articles/removeFromCart?id=<%= article._id %>"><button>Retirer</button></a>
                   </div>
-                  <div class="col-md-2 col-lg-2 col-sm-12"><h4><%= article.price %>€</h4></div>
-                </a>
-            <% }) %>
-            <button>Valider le panier</button>
+                <% }) %>
+                <h4><%= total.toFixed(2) %> €</h4>
+                <button>Valider le panier</button>
+              </div>
             <% } %>
           <!--</div>-->
         </div>
