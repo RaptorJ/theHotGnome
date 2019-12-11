@@ -44,7 +44,14 @@ router.post('/login', async (req, res) => {
     req.session.role = role.name
     req.session.cart = []
     console.log(req.session)
-    res.render('index', { session: req.session })
+    if (req.session.urlorigin) {
+      const path = req.session.urlorigin
+      req.session.urlorigin = undefined
+      res.redirect(path)
+    } else {
+      res.redirect('/')
+    }
+    // res.render('index', { session: req.session })
   }
 })
 
@@ -153,17 +160,21 @@ router.post('/updatePassword', async (req, res) => {
 })
 
 router.get('/userInfo', async (req, res) => {
-  console.log(`Consulting user's info of: ${req.query.username}`)
-  const user = await User.findOne({ username: req.query.username })
-  const result = {
-    username: user.username,
-    birthDate: user.birthDate,
-    mail: user.mail,
-    address: user.address
-  }
-  // res.send(result)
-  res.render('userInfo', { session: req.session, user: result })
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('login')
+  } else {
+    console.log(`Consulting user's info of: ${req.session.username}`)
+    const user = await User.findOne({ username: req.session.username })
+    const result = {
+      username: user.username,
+      birthDate: user.birthDate,
+      mail: user.mail,
+      address: user.address
+    }
+    // res.send(result)
+    res.render('userInfo', { session: req.session, user: result })
   // res.render('500', { session: req.session })
+  }
 })
 
 module.exports = {
