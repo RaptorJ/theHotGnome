@@ -2,6 +2,7 @@ const express = require('express')
 var router = express.Router()
 
 const Article = require('../models/article.model')
+const User = require('../models/user.model')
 const Categorie = require('../models/categorie.model')
 
 let availableTag = []
@@ -37,19 +38,19 @@ async function getAvailableTags () {
   await asyncForEach(articles, async (obj) => {
     availableTag.push(obj.title)
   })
-  console.log(availableTag)
+  // console.log(availableTag)
 }
 
 router.get('/getArticle', async (req, res) => {
   const article = await Article.findById(req.query.id)
   console.log('get article ' + article.title)
-  res.render('viewArticle', { session: req.session, article: article })
+  res.render('viewArticle2', { session: req.session, article: article })
 })
 
 router.post('/getArticleList', async (req, res) => {
   let article = await Article.findOne({ title: req.body.title })
   if (article) {
-    res.render('viewArticle', { session: req.session, article: article })
+    res.render('viewArticle2', { session: req.session, article: article })
   } else {
     const availableItemId = []
     const str = req.body.title.toLowerCase()
@@ -75,7 +76,9 @@ router.get('/addToCart', async (req, res) => {
   try {
     const article = await Article.findById(id)
     req.session.cart.push(article)
-    res.render('index', { session: req.session })
+    console.log('Cart: ' + req.session.cart)
+    res.redirect('cart')
+    // res.render('index', { session: req.session })
     return
   } catch (err) {
     console.log(err)
@@ -83,16 +86,20 @@ router.get('/addToCart', async (req, res) => {
   }
 })
 
+router.get('/cart', (req, res) => {
+  res.render('cart', { session: req.session, articles: req.session.cart })
+})
+
 // Removing an item form the cart
 router.post('/removeFromCart', (req, res) => {
-  for (let i = 0; i < req.session.cart.length; i--) {
-    if (req.session.cart[i].id === req.params.id) req.session.cart.splice(i, 1)
+  for (let i = 0; i < req.session.cart.length; i++) {
+    if (req.session.cart[i].id === req.query.id) req.session.cart.splice(i, 1)
   }
 })
 
 /** ** creating an article ** **/
 router.post('/new', async (req, res) => {
-  const { seller, title, content, price, number, categorie } = req.body
+  const { seller, title, content, price, number, categorie, image } = req.body
   if (!(title) || !(seller) || !(content) || !(price) || !(number) || !(categorie)) {
     res.status(403).send('You did not put enough information!')
     return
@@ -109,16 +116,17 @@ router.post('/new', async (req, res) => {
       title: title,
       content: content,
       price: price,
+      image: image,
       categories: cat,
       number: number
     })
     await newArticle.save()
     getAvailableTags()
-    res.render('index')
+    res.render('index', { session: req.session })
     console.log(`New article successfully added: ${title}`)
     return
   } catch (err) {
-    res.status(404).render('404')
+    res.status(404).render('404', { session: req.session })
   }
 })
 
@@ -150,15 +158,38 @@ router.post('/deleteItem', async (req, res) => {
 
 router.get('/productsType', async (req, res) => {
   const type = req.query.type
+  console.log(type)
   if (!type) {
     res.render('404', { session: req.session })
     return
   }
   const categorieId = await Categorie.findOne({ name: type })
-  const articles = await Article.find({ categorie: categorieId })
-  console.log(articles)
+  console.log(categorieId)
+  const articles = await Article.find({ categories: categorieId })
+  console.log('articles: ' + articles)
   // res.send(articles)
   res.render('viewArticleList', { session: req.session, articles: articles })
+})
+
+router.post('/addComment', async (req, res) => {
+  const { id, content } = req.body
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('../users/login')
+  } else {
+    const writter = User.findOne({ username: req.session.username })
+    const comment = {
+      _writer: writter._id,
+      content: content
+    }
+    const article = await Article.findById(id)
+    if (!article.comments) {
+      article.comments = []
+    }
+    article.comments.push(comment)
+    console.log(article)
+    await article.save()
+  }
+  res.render('index', { session: req.session })
 })
 
 async function asyncForEach (array, callback) {

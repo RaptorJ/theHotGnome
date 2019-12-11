@@ -18,17 +18,25 @@
     <div class="container-fluid">
       <div class="row justify-content-center align-items-center">
         <div class="col-md-3 col-lg-3 col-sm-12 login-background">
-          <h2>Login</h2>
+          <h2>Vos informations</h2>
+          <br>
+          <h8><b>Pseudo: </b></h8>
           <%= user.username %><br/>
+          <h8><b>Date de naissance: </b></h8>
           <%= user.birthDate %><br/>
+          <h8><b>E-mail: </b></h8>
           <%= user.mail %><br/>
-          <%= user.address.street %><br/>
+          <h8><b>Adresse:</b></h8>
+          <%= user.address.street%><br/>
           <%= user.address.city %><br/>
           <%= user.address.postalCode %><br/>
           <%= user.address.country %><br/>
-          <a href="http://localhost:3000/users/updateInformation"><button>Modifier les informations</button></a><br/>
+          <br>
+          <br>
+          <center><a href="http://localhost:3000/users/updateInformation"><button>Modifier les informations</button></a><br/>
           <a href="http://localhost:3000/users/updatePassword"><button>Modifier le mot de passe</button></a>
           <a href="http://localhost:3000/users/logout"><button>logout</button></a>
+        </center>
         </div>
       </div>
     </div>

@@ -24,7 +24,11 @@
             <%= article.content %><br/>
             <%= article.price %><br/>
             <%= article.number %><br/>
-            <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a><br/>          
+            <% if (!session || !session.username) { %>
+              <a href="http://localhost:3000/users/login"><button>Ajouter au panier</button></a><br/>
+            <% } else { %>
+              <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a><br/>
+            <% } %>          
         </div>
       </div>
     </div>

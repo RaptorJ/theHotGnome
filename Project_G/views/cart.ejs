@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Home</title>
+    <title>Cart</title>
   
     <%- include('head.ejs')%>
   </head>
@@ -13,10 +13,10 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-md-10 col-lg-10 col-sm-12">
           <!--<div class="row article-list">-->
-            <% if (articles.length == 0) { %>
+            <% if (!articles || articles.length == 0) { %>
               <div class="row justify-content-center align-items-center main-annonce">
                 <div class="col-md-12 col-lg-12 col-sm-12">
-                  <h4>Aucun article ne correspond à votre recherche</h4>
+                  <h4>Votre panier est vide ! Mais n'hésitez pas à le remplir !</h4>
                 </div>
               </div>
             <% } else { %>
@@ -37,6 +37,7 @@
                   <div class="col-md-2 col-lg-2 col-sm-12"><h4><%= article.price %>€</h4></div>
                 </a>
             <% }) %>
+            <button>Valider le panier</button>
             <% } %>
           <!--</div>-->
         </div>
