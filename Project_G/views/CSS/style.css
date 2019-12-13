@@ -163,6 +163,37 @@ footer h3{
   border-radius: 5px;
   border: 2px solid #AAAAAA;
 }
+
+.login-background textarea:focus{
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  height: 120px;
+  width: 80%;
+  border-radius: 5px;
+  border: 2px solid orange;
+}
+
+.login-background select{
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  height: 40px;
+  width: 80%;
+  border-radius: 5px;
+  border: 2px solid #AAAAAA;
+}
+
+.login-background select:focus{
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  height: 40px;
+  width: 80%;
+  border-radius: 5px;
+  border: 2px solid orange;
+}
+
 /*END NEW ARTICLE PAGE*/
 
 /*SEARCH BAR src :https://stackoverflow.com/questions/28285813/style-jquery-autocomplete-in-a-bootstrap-input-field*/
@@ -174,7 +205,7 @@ footer h3{
   margin-top: 2px;
   list-style: none;
   background-color: #ffffff;
-  border: 1px solid #ccc
+  border: 1px solid #ccc;
   -webkit-border-radius: 5px;
      -moz-border-radius: 5px;
           border-radius: 5px;
@@ -196,3 +227,57 @@ background-color: #DDD;
 display: none;
 }
 /*END SEARCH BAR*/
+
+.article-list{
+  background-color: lightgrey;
+}
+
+.article-list div, .article-list a{  
+  background-color: white;
+  margin-top: 5px;
+}
+
+.article-list div img{
+  width: 100%;
+}
+
+.article-list .content{
+  padding-left: 50px;
+}
+
+/*ARRTICLE PAGE*/
+.imarticle{
+  width: 100%;
+}
+
+.article-description{
+  margin-top: 10px;
+  text-align: justify;
+}
+
+.article-description p{
+  text-align: justify;
+  margin-right: 30px;
+  margin-top: 40px;
+}
+
+.article-price{
+  text-align: justify;
+}
+
+.article-description button{
+  border-radius: 5px;
+  height: 40px;
+  border: none;
+  background-color: #2A2A2A;
+  color: orange;
+  transition: all 0.6s
+}
+
+.article-description button:hover{
+  border: none;
+  background-color: orange;
+  color: #2A2A2A;
+  transition: all 0.6s
+}
+/*END ARTICLE PAGE*/
