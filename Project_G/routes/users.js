@@ -33,6 +33,7 @@ router.post('/login', async (req, res) => {
     res.status(404).render('404', { session: req.session }) // .send('You are not registered ! Your username or password might be wrong !')
     return
   }
+
   console.log(user.role)
   const role = user.role
   if (username === '') {

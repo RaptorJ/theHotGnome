@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
 const User = require('./models/user.model.js')
 const Article = require('./models/article.model.js')
-const Role = require('./models/role.model.js')
 const Order = require('./models/order.model.js')
 const Categorie = require('./models/categorie.model')
 mongoose.connect('mongodb://localhost/theHotGnome')
@@ -15,7 +14,6 @@ fs.readFile('./data.json', 'utf8', async (err, jsonString) => {
   try {
     const data = JSON.parse(jsonString)
     await pushCategories(data)
-    await pushRoles(data)
     await pushUsers(data)
     await pushArticles(data)
     await pushOrders(data)
@@ -42,34 +40,17 @@ async function pushCategories (data) {
   })
 }
 
-async function pushRoles (data) {
-  await asyncForEach(data.roles, async (role) => {
-    try {
-      if (!await Role.findOne({ name: role.name })) {
-        const newRole = new Role({
-          name: role.name
-        })
-        await newRole.save()
-        console.log('Role ' + role.name + ' registered...')
-      } else console.log('Warning: Role ' + role.name + ' already exists!')
-    } catch (err) {
-      console.log('Error while registering role: ', err)
-    }
-  })
-}
-
 async function pushUsers (data) {
   await asyncForEach(data.users, async (user) => {
     try {
       if (!await User.findOne({ username: user.username })) {
-        const userRole = await Role.findOne({ name: user._role })
         const hashedPassword = await bcrypt.hash(user.password.toString(), 10)
         const newUser = new User({
           username: user.username,
           password: hashedPassword,
           mail: user.mail,
           birthDate: user.birthDate,
-          _role: userRole,
+          role: user.role,
           address: user.address
         })
         await newUser.save()

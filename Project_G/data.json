@@ -1,15 +1,4 @@
 {
-    "roles": [
-        {
-            "name": "user"
-        },
-        {
-            "name": "premium"
-        },
-        {
-            "name": "admin"
-        }
-    ],
 
     "categories": [
            { "name": "Jeux_video_Console"},
@@ -25,7 +14,20 @@
             "password": "admin",
             "mail": "admin@admin.com",
             "birthDate": "2019-11-12T14:18:18.834+00:00",
-            "_role": "admin",
+            "role": "admin",
+            "address": 
+            {
+                "street": "1 rue de l'Admin",
+                "city": "Adminville",
+                "postalCode": 11001,
+                "country": "France"
+            }
+        },
+         {
+            "username": "aaaaa",
+            "password": "aaaaaa",
+            "mail": "admin@admin.com",
+            "birthDate": "2019-11-12T14:18:18.834+00:00",
             "address": 
             {
                 "street": "1 rue de l'Admin",
@@ -39,7 +41,7 @@
             "password": "123456",
             "mail": "test@test.com",
             "birthDate": "2019-11-12T14:18:18.834+00:00",
-            "_role": "user",
+            "role": "user",
             "address": 
             {
                 "street": "1 rue du User",
