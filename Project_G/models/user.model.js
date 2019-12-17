@@ -13,6 +13,7 @@ var userSchema = new Schema({
     postalCode: { type: Number, require: true },
     country: { type: String, require: true }
   }
+  // orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
 })
 
 const User = mongoose.model('User', userSchema)

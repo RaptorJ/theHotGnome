@@ -14,6 +14,7 @@ async function tokenToUserMiddleware (req, res, next) {
   next()
 }
 
+router.use(tokenToUserMiddleware)
 /** ** route for log ** **/
 router.get('/login', (req, res) => {
   console.log('Get login page')
@@ -178,6 +179,5 @@ router.get('/userInfo', async (req, res) => {
 })
 
 module.exports = {
-  router,
-  tokenToUserMiddleware
+  router
 }
