@@ -11,6 +11,7 @@ router.use(express.static('views'))
 router.get('/new', async (req, res) => {
   // Verify that user is admin -> todo
   if (!req.session.role || req.session.role !== 'admin') {
+    console.log('Unautorysed connection (Role)')
     res.redirect('cart')
   } else {
     console.log('Get new article page')
