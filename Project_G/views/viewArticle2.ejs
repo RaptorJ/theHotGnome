@@ -50,10 +50,10 @@
                 <table>
                 <% article.comments.forEach(comment => { %>
                   <tr>
-                    <td valign="top"><%= comment._id %></td>
+                    <td valign="top"><%= comment.writerName %></td>
                     <td><%= comment.content %></td>
                   </tr>
-                  <!--<p><%= comment._id %> : <%= comment.content %></p>-->
+                  <!--<p><%= comment.writerName %> : <%= comment.content %></p>-->
                 <% }) %>
                 </table>
               <% } %>

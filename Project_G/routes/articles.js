@@ -109,6 +109,45 @@ router.get('/removeFromCart', (req, res) => {
   res.redirect('cart')
 })
 
+router.get('/buyCart', async (req, res) => {
+  console.log('OY')
+  const articlesToBuy = req.session.cart
+  if (articlesToBuy.length === 0) {
+    console.log('EmptyCart lol bug')
+  }
+  await asyncForEach(articlesToBuy, async (obj) => {
+    const article = await Article.findOne({ title: obj.title })
+    if (article.number === 0) {
+      // TODO virer les console.log
+      console.log('the article is no longer in stock')
+      for (let i = 0; i < req.session.cart.length; i++) {
+        if (req.session.cart[i]._id === article.id) req.session.cart.splice(i, 1)
+      }
+      res.redirect('cart')
+    }
+  })
+  const articlesName = []
+  await asyncForEach(articlesToBuy, async (obj) => {
+    // TODO virer les console.log
+    const article = await Article.findOne({ title: obj.title })
+    console.log('article.nulmber : ' + article.number)
+    article.number--
+    console.log('L132- article.nulmber : ' + article.number)
+    await article.save()
+    articlesName.push(obj.title)
+  })
+  const order = {
+    username: req.session.username,
+    articles: articlesName,
+    price: req.query.price
+  }
+  const user = await User.findOne({ username: req.session.username })
+  user.orders.push(order)
+  await user.save()
+  req.session.cart = []
+  res.render('index', { session: req.session })
+})
+
 /** ** creating an article ** **/
 router.post('/new', async (req, res) => {
   const { seller, title, content, price, number, categorie, image } = req.body
@@ -161,7 +200,7 @@ router.post('/deleteItem', async (req, res) => {
   try {
     await Article.deleteOne({ id: id })
     getAvailableTags()
-    res.render('index')
+    res.render('index', { session: req.session })
     return
   } catch (err) {
     res.status(403).send(err)
@@ -189,9 +228,10 @@ router.post('/addComment', async (req, res) => {
     req.session.urlorigin = `/articles/getArticle?id=${id}`
     res.redirect('../users/login')
   } else {
-    const writter = User.findOne({ username: req.session.username })
+    const writter = await User.findOne({ username: req.session.username })
     const comment = {
       _writer: writter._id,
+      writerName: req.session.username,
       content: content
     }
     const article = await Article.findById(id)

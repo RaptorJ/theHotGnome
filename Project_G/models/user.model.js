@@ -16,8 +16,12 @@ var userSchema = new Schema({
     city: { type: String, require: true },
     postalCode: { type: Number, require: true },
     country: { type: String, require: true }
-  }
-  // orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }]
+  },
+  orders: [{
+    username: { type: String, require: true }, // the owner of the order
+    articles: [{ type: String, requierd: true }],
+    price: { type: Number, require: true }
+  }]
 })
 
 const User = mongoose.model('User', userSchema)
