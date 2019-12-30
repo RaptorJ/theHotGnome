@@ -97,7 +97,8 @@ router.post('/register', async (req, res) => {
         postalCode: postalCode,
         country: country
       },
-      role: undefined
+      role: undefined,
+      orders: []
     })
     await newUser.save()
     console.log(newUser)
