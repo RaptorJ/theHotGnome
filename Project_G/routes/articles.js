@@ -46,6 +46,17 @@ async function getAvailableTags () {
   // console.log(availableTag)
 }
 
+// Get items for index page
+async function getLatestItems () {
+  const items = []
+  const articles = await Article.find({})
+  for (let i = 0; i < 3; i++) {
+    items.push(articles[articles.length - 1 - i])
+  }
+  return items
+  // console.log(availableTag)
+}
+
 router.get('/getArticle', async (req, res) => {
   const article = await Article.findById(req.query.id)
   console.log('get article ' + article.title)
@@ -110,7 +121,7 @@ router.get('/removeFromCart', (req, res) => {
 })
 
 router.get('/buyCart', async (req, res) => {
-  console.log('OY')
+  console.log('OY') // Easter Egg
   const articlesToBuy = req.session.cart
   if (articlesToBuy.length === 0) {
     console.log('EmptyCart lol bug')
@@ -242,7 +253,8 @@ router.post('/addComment', async (req, res) => {
     console.log(article)
     await article.save()
   }
-  res.render('index', { session: req.session })
+  // res.render('index', { session: req.session })
+  res.redirect(`/articles/getArticle?id=${id}`)
 })
 
 async function asyncForEach (array, callback) {
@@ -252,5 +264,6 @@ async function asyncForEach (array, callback) {
 }
 
 module.exports = {
-  router
+  router,
+  getLatestItems
 }

@@ -57,8 +57,27 @@ h1{
   margin: auto;
 }
 
+.carousel-info{
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-info button{
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+  background-color: orange;
+  color: #2A2A2A;
+  transition: all 0.6s
+}
+
+.carousel-info button:hover{
+  border: none;
+  background-color: #2A2A2A;
+  color: orange;
+  transition: all 0.6s
+}
+
 .promo-accueil{
-  width: 70%;
   height: 200px;
   margin: auto;
   display: block;
