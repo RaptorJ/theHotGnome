@@ -26,13 +26,15 @@
               <h4><%= article.title %></h4>
               <h6><%= article.seller %></h6>
               <p><%= article.content %></p>
+              <p>
               <% if (article.number > 10) { %>
-                <p>En stock</p>
+                <font color="green">En stock</font>
               <% } else if (article.number > 0) { %>
-                <p>En stock en nombre limité</p>
+                <font color="orange">En stock en nombre limité</font>
               <% } else { %>
-                <p>Indisponible</p>
+                <font color="red">Indisponible</font>
               <% } %>
+              </p>
               <h5 class="article-price"><%= article.price %> €</h5>
               <p>Economisez <%= (article.price * 0.05).toFixed(2) %> € avec la remise adhérent de 5%</p>
               <!--<% if (!session || !session.username) { %>
@@ -40,7 +42,8 @@
               <% } else { %>
                 <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a><br/>
               <% } %> -->
-              <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a><br/>
+              <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a>
+              <a href="#"><button>Ajouter à la wishlist</button></a><br/>
             </div>
             <div class="col-10">
               <h4>Avis des clients</h4>
@@ -50,7 +53,7 @@
                 <table>
                 <% article.comments.forEach(comment => { %>
                   <tr>
-                    <td valign="top"><%= comment.writerName %></td>
+                    <td valign="top"><b><%= comment.writerName %></b></td>
                     <td><%= comment.content %></td>
                   </tr>
                   <!--<p><%= comment.writerName %> : <%= comment.content %></p>-->

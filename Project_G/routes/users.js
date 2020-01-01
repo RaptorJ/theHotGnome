@@ -58,7 +58,8 @@ router.post('/login', async (req, res) => {
 router.get('/logout', (req, res) => {
   req.session.destroy()
   // res.send('Disconnected!')
-  res.render('index', { session: req.session })
+  res.redirect('/')
+  // res.render('index', { session: req.session })
 })
 
 /** ** route for register ** **/
@@ -175,6 +176,19 @@ router.get('/userInfo', async (req, res) => {
     }
     // res.send(result)
     res.render('userInfo', { session: req.session, user: result })
+  // res.render('500', { session: req.session })
+  }
+})
+
+router.get('/orders', async (req, res) => {
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('login')
+  } else {
+    console.log(`Consulting orders of: ${req.session.username}`)
+    const user = await User.findOne({ username: req.session.username })
+    const orders = user.orders
+    // res.send(result)
+    res.render('orders', { session: req.session, orders: orders })
   // res.render('500', { session: req.session })
   }
 })
