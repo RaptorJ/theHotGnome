@@ -66,28 +66,62 @@ router.get('/addToWishList', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.session.username })
     const article = await Article.findById(req.query.id)
-    console.log('id de larticle: ' + req.query._id)
+    console.log('id de larticle: ' + req.query.id)
     console.log(article)
     if (!article) {
       res.status(404).send('err article: id inconnu')
       return
     }
     // check si l'item n'est pas déjà dans la wishlist
-    for (let i = 0; i < user.wishList.lengt; i++) {
-      if (user.wishList[i]._id === article._id) {
+    for (let i = 0; i < user.wishList.length; i++) {
+      if (user.wishList[i]._id.toString() === article._id.toString()) {
         console.log('already in the wishList')
         res.redirect('/')
         return
       }
     }
+    if (!user.wishList) {
+      user.wishList = []
+    }
     // ajout dans la wishList
     user.wishList.push(article)
-    user.save()
+    console.log(user.wishList)
+    await user.save()
     res.redirect('/')
   } catch (err) {
     console.log(err)
     res.status(403).send(err)
   }
+})
+
+router.get('/whishlist', async (req, res) => {
+  if (!req.session.username || req.session.username === '') {
+    res.redirect('login')
+  } else {
+    console.log(`Consulting whishlist of: ${req.session.username}`)
+    const user = await User.findOne({ username: req.session.username })
+    console.log(user.wishList)
+    let article
+    const whishlist = []
+    await asyncForEach(user.wishList, async (obj) => {
+      article = await Article.findById(obj._id)
+      whishlist.push(article)
+    })
+    // res.send(result)
+    res.render('whishlist', { session: req.session, whishlist: whishlist })
+  // res.render('500', { session: req.session })
+  }
+})
+
+router.get('/removeFromWhishlist', async (req, res) => {
+  const user = await User.findOne({ username: req.session.username })
+  for (let i = 0; i < user.wishList.length; i++) {
+    if (user.wishList[i]._id.toString() === req.query.id.toString()) {
+      user.wishList.splice(i, 1)
+    }
+  }
+  await user.save()
+  res.redirect('whishlist')
 })
 
 router.post('/getArticleList', async (req, res) => {

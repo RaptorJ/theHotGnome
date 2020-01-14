@@ -31,7 +31,7 @@ app.use(express.static('views'))
 app.get('/', async (req, res) => {
   console.log('OK')
   const items = await articles.getLatestItems()
-  console.log(items)
+  // console.log(items)
   res.render('index', { session: req.session, items: items })
   // res.send('ok')
 })

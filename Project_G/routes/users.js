@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 var router = express.Router()
 
 const User = require('../models/user.model.js')
+const Article = require('../models/article.model')
 
 router.use(express.static('views'))
 
@@ -199,7 +200,7 @@ router.post('/updatePassword', async (req, res) => {
     try {
       const hashedPassword = await bcrypt.hash(newPassword.toString(), 10)
       await User.findOneAndUpdate({ username: req.session.username }, { password: hashedPassword })
-      //res.render('index', { session: req.session })
+      // res.render('index', { session: req.session })
       res.redirect('/')
       return
     } catch (err) {
