@@ -9,7 +9,6 @@ let availableTag = []
 router.use(express.static('views'))
 
 router.get('/new', async (req, res) => {
-  // Verify that user is admin -> todo
   if (!req.session.role || req.session.role !== 'admin') {
     console.log('Unautorysed connection (Role)')
     res.redirect('cart')
@@ -61,6 +60,34 @@ router.get('/getArticle', async (req, res) => {
   const article = await Article.findById(req.query.id)
   console.log('get article ' + article.title)
   res.render('viewArticle2', { session: req.session, article: article })
+})
+
+router.get('/addToWishList', async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.session.username })
+    const article = await Article.findById(req.query.id)
+    console.log('id de larticle: ' + req.query._id)
+    console.log(article)
+    if (!article) {
+      res.status(404).send('err article: id inconnu')
+      return
+    }
+    // check si l'item n'est pas déjà dans la wishlist
+    for (let i = 0; i < user.wishList.lengt; i++) {
+      if (user.wishList[i]._id === article._id) {
+        console.log('already in the wishList')
+        res.redirect('/')
+        return
+      }
+    }
+    // ajout dans la wishList
+    user.wishList.push(article)
+    user.save()
+    res.redirect('/')
+  } catch (err) {
+    console.log(err)
+    res.status(403).send(err)
+  }
 })
 
 router.post('/getArticleList', async (req, res) => {
@@ -121,42 +148,49 @@ router.get('/removeFromCart', (req, res) => {
 })
 
 router.get('/buyCart', async (req, res) => {
-  console.log('OY') // Easter Egg
   const articlesToBuy = req.session.cart
   if (articlesToBuy.length === 0) {
     console.log('EmptyCart lol bug')
   }
-  await asyncForEach(articlesToBuy, async (obj) => {
-    const article = await Article.findOne({ title: obj.title })
-    if (article.number === 0) {
-      // TODO virer les console.log
-      console.log('the article is no longer in stock')
-      for (let i = 0; i < req.session.cart.length; i++) {
-        if (req.session.cart[i]._id === article.id) req.session.cart.splice(i, 1)
+  try {
+    await asyncForEach(articlesToBuy, async (obj) => {
+      const article = await Article.findOne({ title: obj.title })
+      if (article.number === 0) {
+        console.log('the article is no longer in stock')
+        for (let i = 0; i < req.session.cart.length; i++) {
+          if (req.session.cart[i]._id === article.id) req.session.cart.splice(i, 1)
+        }
+        res.redirect('cart')
       }
-      res.redirect('cart')
+    })
+    const articlesName = []
+    const user = await User.findOne({ username: req.session.username })
+    await asyncForEach(articlesToBuy, async (obj) => {
+      const article = await Article.findOne({ title: obj.title })
+      article.number--
+      await article.save()
+      articlesName.push(obj.title)
+      // Si l'article est dans la wishList, le supprimer à l'achat
+      for (let i = 0; i < user.wishList.lengt; i++) {
+        if (user.wishList[i]._id === article._id) {
+          console.log('bip' + i)
+          user.wishList.splice(i, 1)
+        }
+      }
+    })
+    const order = {
+      username: req.session.username,
+      articles: articlesName,
+      price: req.query.price
     }
-  })
-  const articlesName = []
-  await asyncForEach(articlesToBuy, async (obj) => {
-    // TODO virer les console.log
-    const article = await Article.findOne({ title: obj.title })
-    console.log('article.nulmber : ' + article.number)
-    article.number--
-    console.log('L132- article.nulmber : ' + article.number)
-    await article.save()
-    articlesName.push(obj.title)
-  })
-  const order = {
-    username: req.session.username,
-    articles: articlesName,
-    price: req.query.price
+    user.orders.push(order)
+    await user.save()
+    req.session.cart = []
+    res.render('index', { session: req.session, items: getLatestItems })
+  } catch (err) {
+    console.log(err)
+    res.status(403).send(err)
   }
-  const user = await User.findOne({ username: req.session.username })
-  user.orders.push(order)
-  await user.save()
-  req.session.cart = []
-  res.render('index', { session: req.session })
 })
 
 /** ** creating an article ** **/
@@ -184,7 +218,7 @@ router.post('/new', async (req, res) => {
     })
     await newArticle.save()
     getAvailableTags()
-    res.render('index', { session: req.session })
+    res.render('index', { session: req.session, items: getLatestItems })
     console.log(`New article successfully added: ${title}`)
     return
   } catch (err) {
@@ -211,7 +245,7 @@ router.post('/deleteItem', async (req, res) => {
   try {
     await Article.deleteOne({ id: id })
     getAvailableTags()
-    res.render('index', { session: req.session })
+    res.redirect('/')
     return
   } catch (err) {
     res.status(403).send(err)
@@ -253,7 +287,6 @@ router.post('/addComment', async (req, res) => {
     console.log(article)
     await article.save()
   }
-  // res.render('index', { session: req.session })
   res.redirect(`/articles/getArticle?id=${id}`)
 })
 

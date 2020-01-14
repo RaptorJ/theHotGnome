@@ -21,6 +21,9 @@ var userSchema = new Schema({
     username: { type: String, require: true }, // the owner of the order
     articles: [{ type: String, requierd: true }],
     price: { type: Number, require: true }
+  }],
+  wishList: [{
+    articles: { type: Schema.Types.ObjectId, ref: 'Article' }
   }]
 })
 

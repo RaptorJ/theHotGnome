@@ -50,7 +50,8 @@ async function pushUsers (data) {
           birthDate: user.birthDate,
           role: user.role,
           address: user.address,
-          orders: user.orders
+          orders: user.orders,
+          whishList: user.whishList
         })
         await newUser.save()
         console.log('User ' + user.username + ' registered...')

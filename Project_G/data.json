@@ -21,7 +21,8 @@
                 "postalCode": 11001,
                 "country": "France"
             },
-            "orders": []
+            "orders": [],
+            "whishList" : []
         },
          {
             "username": "aaaaa",
@@ -35,7 +36,8 @@
                 "postalCode": 11001,
                 "country": "France"
             },
-            "orders": []
+            "orders": [],
+            "whishList" : []
         },
         {
             "username": "Test",
@@ -50,7 +52,8 @@
                 "postalCode": 11111,
                 "country": "France"
             },
-            "orders": []
+            "orders": [],
+            "whishList" : []
         }
     ],
  
