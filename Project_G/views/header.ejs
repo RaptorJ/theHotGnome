@@ -29,7 +29,7 @@
       <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
         <div class="row align-items-center">
           <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12"><!--col-md-4 col-ld-4 col-ms-12 col-xs-12-->
-            <a href="#">
+            <a href="http://localhost:3000/articles/whishlist">
               <img id="Wishlist" src="Images/Wishlist.png" alt="Wishlist" width="50" height="50">
               Wishlist
             </a>
@@ -54,7 +54,7 @@
               Login
             </a>
             <% } else {%>
-              <% const html = `<a href="http://localhost:3000/users/userInfo?username=${session.username}">` %>
+              <% const html = `<a href="http://localhost:3000/users/userInfo">` %>
               <%- html %>
               <!--<a href="http://localhost:3000/users/userInfo>-->
                 <img id="Login" src="Images/User.png" alt="Logout" width="50" height="50">

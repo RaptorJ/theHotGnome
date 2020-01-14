@@ -13,6 +13,7 @@ var articleSchema = new Schema({
   categories: { type: Schema.Types.ObjectId, ref: 'Categorie' },
   comments: [{
     _writer: { type: Schema.Types.ObjectId, ref: 'User' },
+    writerName: { type: String, required: true },
     content: { type: String, required: true },
     date: { type: Date, default: Date.now }
   }]

@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
 const User = require('./models/user.model.js')
 const Article = require('./models/article.model.js')
-const Order = require('./models/order.model.js')
 const Categorie = require('./models/categorie.model')
 mongoose.connect('mongodb://localhost/theHotGnome')
 
@@ -16,7 +15,6 @@ fs.readFile('./data.json', 'utf8', async (err, jsonString) => {
     await pushCategories(data)
     await pushUsers(data)
     await pushArticles(data)
-    await pushOrders(data)
     console.log('Done!')
     process.exit(0)
   } catch (err) {
@@ -51,7 +49,9 @@ async function pushUsers (data) {
           mail: user.mail,
           birthDate: user.birthDate,
           role: user.role,
-          address: user.address
+          address: user.address,
+          orders: user.orders,
+          whishList: user.whishList
         })
         await newUser.save()
         console.log('User ' + user.username + ' registered...')
@@ -85,29 +85,6 @@ async function pushArticles (data) {
       } else console.log('Warning: Article ' + article.title + ' from seller ' + article.seller + ' already exists!')
     } catch (err) {
       console.log('Error while registering article: ', err)
-    }
-  })
-}
-
-async function pushOrders (data) {
-  await asyncForEach(data.orders, async (order) => {
-    try {
-      const orderUser = await User.findOne({ username: order.username })
-      if (orderUser) {
-        const orderArticles = []
-        await asyncForEach(order.articles, async (article) => {
-          orderArticles.push(await Article.findOne({ title: article.title }))
-        })
-        const newOrder = new Order({
-          username: orderUser.username,
-          articles: orderArticles,
-          price: order.price
-        })
-        await newOrder.save()
-        console.log('Order for user ' + order.username + ' registered...')
-      } else console.log('Error: Username ' + order.username + ' not found for cart!')
-    } catch (err) {
-      console.log('Error while registering order: ', err)
     }
   })
 }

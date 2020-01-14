@@ -2,75 +2,9 @@
   <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <!--<link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="JS/bootstrap.min.js"></script>
-    <script type="text/javascript" language="javascript">
-    var availableTags
-
-    $(document).ready(function() {
-      const parameters = null
-      $.get( '/products',parameters, function(data) {
-        availableTags = data
-      })
-    })
-
-    $( function() {
-      /*var availableTags = [
-        "ActionScript",
-        "AppleScript",
-        "Asp",
-        "BASIC",
-        "C",
-        "C++",
-        "Clojure",
-        "COBOL",
-        "ColdFusion",
-        "Erlang",
-        "Fortran",
-        "Groovy",
-        "Haskell",
-        "Java",
-        "JavaScript",
-        "Lisp",
-        "Perl",
-        "PHP",
-        "Python",
-        "Ruby",
-        "Scala",
-        "Scheme",
-        "Playstation 4 Pro",
-        "Switch",
-        "Asus Rog",
-        "Death Stranding",
-        "Dark Souls : Par delà la mort"
-      ];*/
-      $( "#tags" ).autocomplete({
-        //source: availableTags
-        source: function (request, response) {
-            var term = $.ui.autocomplete.escapeRegex(request.term)
-                , startsWithMatcher = new RegExp("^" + term, "i")
-                , startsWith = $.grep(availableTags, function(value) {
-                    return startsWithMatcher.test(value.label || value.value || value);
-                })
-                , containsMatcher = new RegExp(term, "i")
-                , contains = $.grep(availableTags, function (value) {
-                    return $.inArray(value, startsWith) < 0 &&
-                        containsMatcher.test(value.label || value.value || value);
-                });
-
-            response(startsWith.concat(contains));
-        }
-      });
-    } );
-  </script>-->
+    
+    <%- include('head.ejs')%>
   
-  <%- include('head.ejs')%>
   </head>
 
   <body> <!--row col row col-->
@@ -79,7 +13,7 @@
     <div class="container-fluid">
       <div class="row justify-content-center align-items-center">
         <div class="col-md-10 col-lg-10 col-sm-12">
-          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -89,15 +23,35 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <img class="d-block w-100" src="Images/DS_carousel.png" alt="First slide">
+                <div class="carousel-caption d-none d-md-block carousel-info">
+                  <h5>Death Stranding</h5>
+                  <p>Le jeu tant attendu qui marque le grand retour d'Hideo Kojima est enfin disponible !</p>
+                  <a href="http://localhost:3000/500"><button>Consulter</button></a>
+                </div>
               </div>
               <div class="carousel-item">
                 <img class="d-block w-100" src="Images/Dark_Souls.PNG" alt="Second slide">
+                <div class="carousel-caption d-none d-md-block carousel-info">
+                  <h5>Dark Souls, Par delà la mort volume 2</h5>
+                  <p>Toutes les informations sur les deux derniers soulsborne résumé dans un livre ultra détaillé</p>
+                  <a href="http://localhost:3000/500"><button>Consulter</button></a>
+                </div>
               </div>
               <div class="carousel-item">
                 <img class="d-block w-100" src="Images/Cyberpunk.png" alt="Third slide">
+                <div class="carousel-caption d-none d-md-block carousel-info">
+                  <h5>Cyberpunk 2077</h5>
+                  <p>Vous voulez tout savoir sur les aventures de V ? Retrouvez toutes nos actus sur Cyberpunk ici</p>
+                  <a href="http://localhost:3000/500"><button>Consulter</button></a>
+                </div>
               </div>
               <div class="carousel-item">
                 <img class="d-block w-100" src="Images/Elden_Ring.jpg" alt="Fourth slide">
+                <div class="carousel-caption d-none d-md-block carousel-info">
+                  <h5>Elden Ring</h5>
+                  <p>Georges R. R. Martin et Hidetaka Miyazazki travaillant sur un nouveau jeu ! Vous êtes hypé ? Parce que nous oui !</p>
+                  <a href="http://localhost:3000/500"><button>Consulter</button></a>
+                </div>
               </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -111,8 +65,9 @@
           </div>
         </div>
         <div class="col-md-10 col-lg-10 col-sm-12 main-annonce">
-          <h1 class="annonce">Préparez Noël avec nos super promotions ! Jusqu'à -50% !</h1>
+          <h1 class="annonce">Consultez les derniers produits disponibles sur GNOME !</h1>
         </div>
+        <!--
         <div class="col-md-10 col-lg-10 col-sm-12 main-body">
           <div class="row justify-content-center">
             <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
@@ -124,6 +79,16 @@
             <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
               <img class="promo-accueil" src="Images/PS4.png" alt="Promo">
             </div>
+          </div>
+        </div>
+        -->
+        <div class="col-md-10 col-lg-10 col-sm-12 main-body">
+          <div class="row justify-content-center">
+            <% for(let i = 0; i < 3; i++) { %>
+              <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
+                <a href="http://localhost:3000/articles/getArticle?id=<%= items[i]._id %>"><img class="promo-accueil" src="<%= items[i].image%>" alt="Promo"></a>
+              </div>
+            <% } %>
           </div>
         </div>
     </div>

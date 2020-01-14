@@ -9,7 +9,8 @@
 <script type="text/javascript" language="javascript">
   var availableTags
 
-  $(document).ready(function() {
+  //$(document).ready(function() {
+  $(window).on('load', function() { // allow index to use document.ready
     const parameters = null
     $.post( '/articles/products',parameters, function(data) {
       availableTags = data
@@ -17,35 +18,7 @@
   })
 
   $( function() {
-    /*var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme",
-      "Playstation 4 Pro",
-      "Switch",
-      "Asus Rog",
-      "Death Stranding",
-      "Dark Souls : Par delà la mort"
-    ];*/
+    
     $( "#tags" ).autocomplete({
       //source: availableTags
       source: function (request, response) {

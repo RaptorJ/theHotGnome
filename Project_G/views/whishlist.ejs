@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Cart</title>
+    <title>Whishlist</title>
   
     <%- include('head.ejs')%>
   </head>
@@ -13,16 +13,16 @@
       <div class="row justify-content-center align-items-center">
         <div class="col-md-10 col-lg-10 col-sm-12">
           <!--<div class="row article-list">-->
-            <% if (!articles || articles.length == 0) { %>
+            <% if (!whishlist || whishlist.length == 0) { %>
               <div class="row justify-content-center align-items-center main-annonce">
                 <div class="col-md-12 col-lg-12 col-sm-12">
-                  <h4>Votre panier est vide ! Mais n'hésitez pas à le remplir !</h4>
+                  <h4>Votre whishlist est vide ! Mais nous sommes sûr que vous y ajouterez plein d'articles !</h4>
                 </div>
               </div>
             <% } else { %>
               <div class="row article-list" >
                 <% let total = 0 %>
-                <% articles.forEach(article => { %>
+                <% whishlist.forEach(article => { %>
                   <div class="col-md-2 col-lg- col-sm-12">
                     <% if (article.image) { %>
                       <img src="<%= article.image %>">
@@ -40,11 +40,10 @@
                     <% total += article.price %>
                     <p>Prix adhérent <%= (article.price - article.price * 0.05).toFixed(2) %> € </p>
                     <a href="http://localhost:3000/articles/getArticle?id=<%= article._id %>"><button>Consulter</button></a>
-                    <a href="http://localhost:3000/articles/removeFromCart?id=<%= article._id %>"><button>Retirer</button></a>
+                    <a href="http://localhost:3000/articles/removeFromWhishlist?id=<%= article._id %>"><button>Retirer de la whishlist</button></a>
+                    <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a>
                   </div>
                 <% }) %>
-                <h4><%= total.toFixed(2) %> €</h4>
-                <a href="http://localhost:3000/articles/buyCart?price=<%= total %>"><button>Valider le panier</button> </a>
               </div>
             <% } %>
           <!--</div>-->

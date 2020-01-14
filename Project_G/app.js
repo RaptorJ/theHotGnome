@@ -28,9 +28,11 @@ app.use('/articles', articles.router)
 
 app.use(express.static('views'))
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   console.log('OK')
-  res.render('index', { session: req.session })
+  const items = await articles.getLatestItems()
+  // console.log(items)
+  res.render('index', { session: req.session, items: items })
   // res.send('ok')
 })
 
