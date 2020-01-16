@@ -18,7 +18,8 @@ app.use(session({
   name: 'sessId',
   username: undefined,
   role: undefined,
-  cart: [],
+  cart: undefined,
+  urlorigin: undefined,
   secret: 'myDirtyLittleSecret'
 }))
 
@@ -27,16 +28,15 @@ app.use('/articles', articles.router)
 
 app.use(express.static('views'))
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   console.log('OK')
-  res.render('index', { session: req.session })
-  // res.send('ok')
+  const items = await articles.getLatestItems()
+  res.render('index', { session: req.session, items: items })
 })
 
 app.get('/500', (req, res) => {
   console.log('En développement')
   res.render('500', { session: req.session })
-  // res.send('ok')
 })
 
 app.listen(3000, () => {

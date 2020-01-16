@@ -1,0 +1,73 @@
+ <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Article</title>
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="JS/bootstrap.min.js"></script>
+    
+    <%- include('head.ejs')%>
+  </head>
+
+  <body>
+    <%- include('header.ejs')%>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-10 col-lg-10 col-sm-12 login-background">
+          <div class="row justify-content-center">
+            <div class="col-4">
+              <img class="imarticle" src="<%= article.image %>">
+            </div>
+            <div class="col-8 article-description">
+              <h4><%= article.title %></h4>
+              <h6><%= article.seller %></h6>
+              <p><%= article.content %></p>
+              <p>
+              <% if (article.number > 10) { %>
+                <font color="green">En stock</font>
+              <% } else if (article.number > 0) { %>
+                <font color="orange">En stock en nombre limité</font>
+              <% } else { %>
+                <font color="red">Indisponible</font>
+              <% } %>
+              </p>
+              <h5 class="article-price"><%= article.price %> €</h5>
+              <p>Economisez <%= (article.price * 0.05).toFixed(2) %> € avec la remise adhérent de 5%</p>
+              <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a>
+              <a href="http://localhost:3000/articles/addToWishList?id=<%= article._id%>"><button>Ajouter à la wishlist</button></a><br/>
+            </div>
+            <div class="col-10">
+              <h4>Avis des clients</h4>
+              <% if (!article.comments || article.comments.length <= 0) { %>
+                <p>Aucun amoureux de la pop culture n'a encore commenté cet article. Soyez le premier à laisser votre avis !</p>
+              <% } else { %>
+                <table class="comments">
+                  <% article.comments.forEach(comment => { %>
+                    <tr>
+                      <td valign="top"><b><%= comment.writerName %></b></td>
+                      <td><%= comment.content %></td>
+                    </tr>
+                  <% }) %>
+                </table>
+              <% } %>
+            </div>
+            <div class="col-10">
+              <h4>Laissez un commentaire</h4>
+              <form action="http://localhost:3000/articles/addComment" method="POST">
+                <input name="id" value="<%=article._id%>" type="hidden">
+                <textarea name="content" placeholder="Donnez votre avis"></textarea>
+                <input type="submit" value="Commenter">
+              </form>
+            </div>
+          </div>         
+        </div>
+      </div>
+    </div>
+
+    <%- include('footer.ejs')%>
+  </body>
+</html>

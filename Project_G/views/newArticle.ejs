@@ -2,12 +2,6 @@
   <head>
     <meta charset="utf-8">
     <title>New Article</title>
-    <!--<link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="JS/bootstrap.min.js"></script>-->
     <%- include('head.ejs')%>
   </head>
 
@@ -21,7 +15,13 @@
           <form action="http://localhost:3000/articles/new" method="POST">
             <input name="seller" type="text" placeholder="Vendeur" />
             <input name="title" type="text" placeholder="Nom du produit" />
+            <select name="category" aria-placeholder="Choisissez une catégorie">
+              <% availableTag.forEach(tag => { %>
+                <option value="<%= tag %>"><%= tag %></option>
+              <% }) %>
+            </select>
             <textarea name="content" placeholder="Description"></textarea>
+            <input name="image" type="text" placeholder="Lien de l'image" />
             <input name="price" type="text" placeholder="Prix" />
             <input name="number" type="text" placeholder="Stock" />
             <input type="submit" value="Register" />

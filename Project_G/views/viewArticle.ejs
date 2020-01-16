@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Article</title>
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="JS/bootstrap.min.js"></script>
+    
+    <%- include('head.ejs')%>
+  </head>
+
+  <body>
+    <%- include('header.ejs')%>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center">
+          <div class="col-md-3 col-lg-3 col-sm-12 login-background">
+            <h2>Article informations</h2>
+            <%= article.seller %><br/>
+            <%= article.title %><br/>
+            <%= article.content %><br/>
+            <%= article.price %><br/>
+            <%= article.number %><br/>
+            <% if (!session || !session.username) { %>
+              <a href="http://localhost:3000/users/login"><button>Ajouter au panier</button></a><br/>
+            <% } else { %>
+              <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a><br/>
+            <% } %>          
+        </div>
+      </div>
+    </div>
+
+    <%- include('footer.ejs')%>
+  </body>
+</html>

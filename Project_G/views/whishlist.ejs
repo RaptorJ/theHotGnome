@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Whishlist</title>
+  
+    <%- include('head.ejs')%>
+  </head>
+
+  <body>
+    <%- include('header.ejs')%>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-10 col-lg-10 col-sm-12">
+            <% if (!whishlist || whishlist.length == 0) { %>
+              <div class="row justify-content-center align-items-center main-annonce">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <h4>Votre whishlist est vide ! Mais nous sommes sûr que vous y ajouterez plein d'articles !</h4>
+                </div>
+              </div>
+            <% } else { %>
+              <div class="row article-list" >
+                <% let total = 0 %>
+                <% whishlist.forEach(article => { %>
+                  <div class="col-md-2 col-lg- col-sm-12">
+                    <% if (article.image) { %>
+                      <img src="<%= article.image %>">
+                    <% } else { %>
+                      <img src="https://d1eh9yux7w8iql.cloudfront.net/product_images/1552486432.53.jpg?fbclid=IwAR1nSRaFRARSm5HtIFyge18TBXMKq5ViyWoq49ObnIck80Gctm9Nmeo0wtg">
+                    <% } %>
+                  </div>
+                  <a class="col-md-8 col-lg-8 col-sm-12 content" href="http://localhost:3000/articles/getArticle?id=<%= article._id %>">
+                    <h4><%= article.title %></h4>
+                    <h6><%= article.seller %></h6>
+                    <p><%= article.content %></p>
+                  </a>
+                  <div class="col-md-2 col-lg-2 col-sm-12">
+                    <h4><%= article.price %>€</h4>
+                    <% total += article.price %>
+                    <p>Prix adhérent <%= (article.price - article.price * 0.05).toFixed(2) %> € </p>
+                    <a href="http://localhost:3000/articles/getArticle?id=<%= article._id %>"><button>Consulter</button></a>
+                    <a href="http://localhost:3000/articles/removeFromWhishlist?id=<%= article._id %>"><button>Retirer de la whishlist</button></a>
+                    <a href="http://localhost:3000/articles/addToCart?id=<%= article._id %>"><button>Ajouter au panier</button></a>
+                  </div>
+                <% }) %>
+              </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('footer.ejs')%>
+
+  </body>
+</html>
