@@ -2,6 +2,13 @@
   border: 1px solid black;
 }*/
 
+.comments{
+  width: 100%;
+}
+.comments tr{
+  max-width: 100%;
+  white-space: break-spaces;
+}
 .row{
   padding: 0px;
 }
@@ -117,7 +124,7 @@ footer h3{
   color: #2A2A2A;
 }
 
-.login-background input{
+.login-background input, .login-background button{
   display: block;
   margin: auto;
   margin-top: 40px;
@@ -140,7 +147,16 @@ footer h3{
   transition: all 0.6s
 }
 
-.login-background input[type=submit]:hover{
+.login-background button{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: none;
+  background-color: #2A2A2A;
+  color: orange;
+  transition: all 0.6s
+}
+
+.login-background input[type=submit]:hover, .login-background button:hover{
   border: none;
   background-color: orange;
   color: #2A2A2A;

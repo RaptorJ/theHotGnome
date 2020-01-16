@@ -1,13 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Login</title>
-    <!--<link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="JS/bootstrap.min.js"></script>-->
+    <title>User information</title>
     
     <%- include('head.ejs')%>
   </head>
@@ -15,7 +9,7 @@
   <body>
     <%- include('header.ejs')%>
 
-    <div class="container-fluid">
+    <!--<div class="container-fluid">
       <div class="row justify-content-center align-items-center">
         <div class="col-md-3 col-lg-3 col-sm-12 login-background">
           <h2>Vos informations</h2>
@@ -39,6 +33,24 @@
             <a href="http://localhost:3000/users/orders"><button>Consulter vos commandes</button></a>
             <a href="http://localhost:3000/users/logout"><button>logout</button></a>
           </center>
+        </div>
+      </div>
+    </div>-->
+    <div class="container-fluid">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 col-lg-6 col-sm-12 login-background">
+          <h2><%= user.username %></h2>
+            <form action="#" method="POST">
+              <input name="username" type="text" placeholder="Mail" disabled value=<%= user.username %> />
+              <input name="birthDate" type="date" placeholder="Mail" disabled value=<%= user.birthDate %> />
+              <input name="mail" type="text" placeholder="Mail" disabled value=<%= user.mail %> />
+              <input name="street" type="text" placeholder="20 avenue de la République" disabled value="<%= user.address.street %>, <%= user.address.postalCode %> <%= user.address.city %> - <%= user.address.country %>" />
+            </form>
+            <a href="http://localhost:3000/users/updateInformation"><button>Modifier les informations</button></a>
+            <a href="http://localhost:3000/users/updatePassword"><button>Modifier le mot de passe</button></a>
+            <a href="http://localhost:3000/users/orders"><button>Consulter vos commandes</button></a>
+            <a href="http://localhost:3000/users/logout"><button>logout</button></a>
+          </div>
         </div>
       </div>
     </div>

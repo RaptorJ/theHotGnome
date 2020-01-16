@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs')
 var router = express.Router()
 
 const User = require('../models/user.model.js')
-const Article = require('../models/article.model')
 
 router.use(express.static('views'))
 
@@ -16,6 +15,14 @@ async function tokenToUserMiddleware (req, res, next) {
 
 router.use(tokenToUserMiddleware)
 /** ** route for log ** **/
+/**
+ * @name get/login
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/login', (req, res) => {
   console.log('Get login page')
   res.render('login', { session: req.session })
@@ -23,8 +30,14 @@ router.get('/login', (req, res) => {
 
 /**
  * Route to login
- * @param in username, username of the user
- * @param in password, the password of the user
+ * @name post/login
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {string} username - username of the user
+ * @param {string} password - the password of the user
+ * @param {callback} middleware - Express middleware.
  */
 router.post('/login', async (req, res) => {
   console.log(req.body)
@@ -64,6 +77,12 @@ router.post('/login', async (req, res) => {
 /**
  * Route to logout
  * Destroy the current session and redirect to index page
+ * @name get/logout
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
  */
 router.get('/logout', (req, res) => {
   req.session.destroy()
@@ -75,6 +94,12 @@ router.get('/logout', (req, res) => {
 /** ** route for register ** **/
 /**
  * Route to get register page
+ * @name get/register
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
  */
 router.get('/register', (req, res) => {
   console.log('Get register page')
@@ -83,15 +108,21 @@ router.get('/register', (req, res) => {
 
 /**
  * Route to create a new account
- * @param in firstname of the user
- * @param in lastname of the user
- * @param in username of the user
- * @param in mail of the user
- * @param in password of the user
- * @param in street of the user
- * @param in city of the user
- * @param in postalCode of the user
- * @param in country of the user
+ * @name post/register
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ * @param {string} firstname - firstename of the user
+ * @param {string} lastname - lastname of the user
+ * @param {string} username - username of the user
+ * @param {string} mail - mail of the user
+ * @param {string} password - password of the user
+ * @param {string} street -street of the user
+ * @param {string} city - city of the user
+ * @param {number} postalCode - postal code of the user
+ * @param {string} country - country of the user
  */
 router.post('/register', async (req, res) => {
   console.log(req.body)
@@ -142,6 +173,12 @@ router.post('/register', async (req, res) => {
 /** route for update **/
 /**
  * Route to get user information update page
+ * @name get/updateInformation
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
  */
 router.get('/updateInformation', async (req, res) => {
   console.log('Update information: ' + req.session.username)
@@ -157,17 +194,23 @@ router.get('/updateInformation', async (req, res) => {
 
 /**
  * Route to update user's information
- * @param in mail, new mail
- * @param in street, new street
- * @param in city, new city
- * @param in postalCode, new postal code
- * @param in country, new country
+ * @name post/updateInformation
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ * @param {string} mail - new mail
+ * @param {string} street - new street
+ * @param {string} city - new city
+ * @param {number} postalCode - new postal code
+ * @param {string} country - new country
  */
 router.post('/updateInformation', async (req, res) => {
   const { mail, birthday, street, city, postalCode, country } = req.body
   try {
     await User.findOneAndUpdate({ username: req.session.username }, { mail: mail, birthday: birthday, address: { street: street, city: city, postalCode: postalCode, country: country } })
-    res.render('index', { session: req.session })
+    res.redirect('/')
     return
   } catch (err) {
     res.status(404).send(err)
@@ -176,6 +219,12 @@ router.post('/updateInformation', async (req, res) => {
 
 /**
  * Route to get page to change password
+ * @name get/updatePassword
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
  */
 router.get('/updatePassword', async (req, res) => {
   console.log('Update password: ' + req.session.username)
@@ -184,9 +233,15 @@ router.get('/updatePassword', async (req, res) => {
 
 /**
  * Route to update user's password
- * @param in oldPassword, the old password of the user
- * @param in newPassword, the new password
- * @param in verifiedPassword, the verification of the new password
+ * @name get/login
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {string} oldPassword - the old password of the user
+ * @param {string} newPassword - the new password
+ * @param {string} verifiedPassword - the verification of the new password
+ * @param {callback} middleware - Express middleware.
  */
 router.post('/updatePassword', async (req, res) => {
   const { oldPassword, newPassword, verifiedPassword } = req.body
@@ -211,6 +266,12 @@ router.post('/updatePassword', async (req, res) => {
 
 /**
  * Route to get the user's information page
+ * @name get/userInfo
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
  */
 router.get('/userInfo', async (req, res) => {
   if (!req.session.username || req.session.username === '') {
@@ -232,6 +293,12 @@ router.get('/userInfo', async (req, res) => {
 
 /**
  * Route to obtain the page resuming the orders of the user
+ * @name get/orders
+ * @function
+ * @memberof module:routers/users~usersRouter
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
  */
 router.get('/orders', async (req, res) => {
   if (!req.session.username || req.session.username === '') {
