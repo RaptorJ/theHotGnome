@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 var articleSchema = new Schema({
-  // _seller: { type: Schema.Types.ObjectId, ref: 'User' },
   seller: { type: String, require: true },
   title: { type: String, require: true },
   content: { type: String, required: true },

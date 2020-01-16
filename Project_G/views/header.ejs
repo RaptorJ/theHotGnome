@@ -2,10 +2,10 @@
     <div class="row align-items-center">
       <div class="col-md-3 col-ld-3 col-ms-12 col-xs-12">
         <div class="row align-items-center">
-          <div class="col-md-4 col-ld-4 col-ms-4 col-xs-4"><!--col-md-1 col-ld-1 col-ms-12 col-xs-12-->
+          <div class="col-md-4 col-ld-4 col-ms-4 col-xs-4">
             <img id="logo" src="Images/Soul_Logo.png" alt="Logo" width="80" height="80">
           </div>
-          <div class="col-md-8 col-ld-8 col-ms-8 col-xs-8"><!--col-md-2 col-ld-2 col-ms-12 col-xs-12-->
+          <div class="col-md-8 col-ld-8 col-ms-8 col-xs-8">
             <a href="http://localhost:3000/"><h1>GNOME</h1></a>
             <small>L'ame de la Pop Culture</small>
           </div>
@@ -13,14 +13,6 @@
       </div>
       
       <div class="col-md-5 col-ld-5 col-ms-12 col-xs-12">
-        <!--<h2>Search Bar</h2>-->
-        <!--<div class="input-group md-form form-sm form-2 pl-0">
-          <input class="form-control my-0 py-1 amber-border" id="tags" type="text" placeholder="Je recherche..." aria-label="Search">
-          <div class="input-group-append">
-            <span class="input-group-text amber lighten-3" id="basic-text1"><i class="fas fa-search"
-                aria-hidden="true"></i></span>
-          </div>
-        </div>-->
         <form class="input-group md-form form-sm form-2 pl-0" action="http://localhost:3000/articles/getArticleList" method="POST">
           <input class="form-control my-0 py-1 amber-border" name="title" id="tags" type="text" placeholder="Je recherche..." aria-label="Search">
           <input type="submit">
@@ -28,7 +20,7 @@
       </div>
       <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
         <div class="row align-items-center">
-          <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12"><!--col-md-4 col-ld-4 col-ms-12 col-xs-12-->
+          <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
             <a href="http://localhost:3000/articles/whishlist">
               <img id="Wishlist" src="Images/Wishlist.png" alt="Wishlist" width="50" height="50">
               Wishlist
@@ -56,7 +48,6 @@
             <% } else {%>
               <% const html = `<a href="http://localhost:3000/users/userInfo">` %>
               <%- html %>
-              <!--<a href="http://localhost:3000/users/userInfo>-->
                 <img id="Login" src="Images/User.png" alt="Logout" width="50" height="50">
                 <%= session.username %>
               </a>
@@ -65,8 +56,7 @@
         </div>
       </div>
     </div>
-    <div class="row justify-content-center"><!--container-fluid-->
-      <!-- Need to work this part -->
+    <div class="row justify-content-center">
         <nav class="col-md-10 col-lg-10 col-sm-12 hidden-xs" id="menu">
             <ul class="row"> 
                 <li class="col-md-2 col-lg-2 col-sm-12 hidden-xs"><a href="http://localhost:3000/articles/productsType?type=Papeterie">Livres, Comics, Mangas</a></li>

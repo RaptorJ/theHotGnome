@@ -1,13 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Register</title>
-    <!--<link rel="stylesheet" href="CSS/bootstrap.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="shortcut icon" href="Images/icon.ico" type="image/x-icon">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="JS/bootstrap.min.js"></script>-->
+    <title>Update information</title>
     <%- include('head.ejs')%>
   </head>
 
@@ -20,7 +14,6 @@
           <h2><%= user.username %></h2>
             <form action="http://localhost:3000/users/updateInformation" method="POST">
               <input name="mail" type="text" placeholder="Mail" value=<%= user.mail %> />
-              <input name="birthday" type="date" placeholder="01/01/1960" value=<%= user.birthDate %> />
               <input name="street" type="text" placeholder="20 avenue de la République" value="<%= user.address.street %>" />
               <input name="city" type="text" placeholder="Paris" value=<%= user.address.city %> />
               <input name="postalCode" type="text" placeholder="75010" value=<%= user.address.postalCode %> />

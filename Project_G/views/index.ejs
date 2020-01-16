@@ -7,7 +7,7 @@
   
   </head>
 
-  <body> <!--row col row col-->
+  <body>
     <%- include('header.ejs')%>
 
     <div class="container-fluid">
@@ -67,21 +67,6 @@
         <div class="col-md-10 col-lg-10 col-sm-12 main-annonce">
           <h1 class="annonce">Consultez les derniers produits disponibles sur GNOME !</h1>
         </div>
-        <!--
-        <div class="col-md-10 col-lg-10 col-sm-12 main-body">
-          <div class="row justify-content-center">
-            <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
-              <img class="promo-accueil" src="Images/PC.png" alt="Promo">
-            </div>
-            <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
-              <img class="promo-accueil" src="Images/DS_Special.png" alt="Promo">
-            </div>
-            <div class="col-md-4 col-ld-4 col-ms-12 col-xs-12">
-              <img class="promo-accueil" src="Images/PS4.png" alt="Promo">
-            </div>
-          </div>
-        </div>
-        -->
         <div class="col-md-10 col-lg-10 col-sm-12 main-body">
           <div class="row justify-content-center">
             <% for(let i = 0; i < 3; i++) { %>
