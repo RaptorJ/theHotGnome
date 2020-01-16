@@ -42,7 +42,6 @@ async function getAvailableTags () {
   await asyncForEach(articles, async (obj) => {
     availableTag.push(obj.title)
   })
-  // console.log(availableTag)
 }
 
 // Get items for index page
@@ -53,7 +52,6 @@ async function getLatestItems () {
     items.push(articles[articles.length - 1 - i])
   }
   return items
-  // console.log(availableTag)
 }
 
 router.get('/getArticle', async (req, res) => {
@@ -107,7 +105,7 @@ router.post('/getArticleList', async (req, res) => {
   }
 })
 
-// List of product name for search barS
+// List of product name for search bar
 router.post('/products', async (req, res) => {
   await getAvailableTags()
   res.send(availableTag)
@@ -125,7 +123,6 @@ router.get('/addToCart', async (req, res) => {
       req.session.cart.push(article)
       console.log('Cart: ' + req.session.cart)
       res.redirect('cart')
-      // res.render('index', { session: req.session })
       return
     } catch (err) {
       console.log(err)
@@ -139,7 +136,6 @@ router.get('/cart', (req, res) => {
 })
 
 // Removing an item form the cart
-// Change from POST to GET
 router.get('/removeFromCart', (req, res) => {
   for (let i = 0; i < req.session.cart.length; i++) {
     if (req.session.cart[i]._id === req.query.id) req.session.cart.splice(i, 1)
@@ -186,7 +182,7 @@ router.get('/buyCart', async (req, res) => {
     user.orders.push(order)
     await user.save()
     req.session.cart = []
-    res.render('index', { session: req.session, items: getLatestItems })
+    res.redirect('/')
   } catch (err) {
     console.log(err)
     res.status(403).send(err)
@@ -218,7 +214,7 @@ router.post('/new', async (req, res) => {
     })
     await newArticle.save()
     getAvailableTags()
-    res.render('index', { session: req.session, items: getLatestItems })
+    res.redirect('/')
     console.log(`New article successfully added: ${title}`)
     return
   } catch (err) {
@@ -263,7 +259,6 @@ router.get('/productsType', async (req, res) => {
   console.log(categorieId)
   const articles = await Article.find({ categories: categorieId })
   console.log('articles: ' + articles)
-  // res.send(articles)
   res.render('viewArticleList', { session: req.session, articles: articles })
 })
 

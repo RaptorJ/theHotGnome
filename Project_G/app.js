@@ -33,13 +33,11 @@ app.get('/', async (req, res) => {
   const items = await articles.getLatestItems()
   console.log(items)
   res.render('index', { session: req.session, items: items })
-  // res.send('ok')
 })
 
 app.get('/500', (req, res) => {
   console.log('En développement')
   res.render('500', { session: req.session })
-  // res.send('ok')
 })
 
 app.listen(3000, () => {
