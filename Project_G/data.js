@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const User = require('./models/user.model.js')
 const Article = require('./models/article.model.js')
 const Categorie = require('./models/categorie.model')
-mongoose.connect('mongodb://localhost/theHotGnome')
+mongoose.connect('mongodb+srv://admin:admin@cluster0-fyqyq.azure.mongodb.net/theHotGnome')
 
 fs.readFile('./data.json', 'utf8', async (err, jsonString) => {
   if (err) {

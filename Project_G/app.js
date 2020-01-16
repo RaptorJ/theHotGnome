@@ -6,7 +6,7 @@ var app = express()
 const path = require('path')
 const bodyParser = require('body-parser') // pour parser les requêtes POST
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/theHotGnome')
+mongoose.connect('mongodb+srv://admin:admin@cluster0-fyqyq.azure.mongodb.net/theHotGnome')
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
