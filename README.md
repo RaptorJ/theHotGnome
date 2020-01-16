@@ -83,8 +83,7 @@ promotion est disponible pour un article en question.
 
 Après avoir défini le scope du projet, il est important de se pencher sur la question des différentes technologies à utiliser et de l’architecture 
 projet à mettre en place. En effet, si l’utilisation de Node.js est somme toute évidente dans le cadre de ce cours, il existe plusieurs solutions 
-concernant la partie front. Dans le cadre de ce projet, nous avons décidé d’utiliser Vue JS pour mettre en place la partie front. Ce Framework, bien 
-que inconnu, nous semble  plutôt adapté pour ce type de projet. Pour la partie persistance des données, nous avons décidé de rester avec mongoDB dans 
+concernant la partie front. Dans le cadre de ce projet, nous avons décidé d’utiliser ejs pour mettre en place la partie front. cette approche nous semble  plutôt adapté pour ce projet et fait echo à ce que nous avons vue en cours. Pour la partie persistance des données, nous avons décidé de rester avec mongoDB dans 
 un objectif de cohérence par rapport au cours.
 
 Enfin au niveau de l’architecture, nous avions réfléchis à mettre en place une structure sous forme de SPA, mais dans le temps imparti et au vue 
