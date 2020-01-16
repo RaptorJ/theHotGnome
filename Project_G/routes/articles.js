@@ -146,7 +146,7 @@ router.get('/addToWishList', async (req, res) => {
  */
 router.get('/whishlist', async (req, res) => {
   if (!req.session.username || req.session.username === '') {
-    res.redirect('login')
+    res.redirect('/users/login')
   } else {
     console.log(`Consulting whishlist of: ${req.session.username}`)
     const user = await User.findOne({ username: req.session.username })
