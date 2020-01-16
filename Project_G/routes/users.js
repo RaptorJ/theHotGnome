@@ -25,7 +25,7 @@ router.use(tokenToUserMiddleware)
  */
 router.get('/login', (req, res) => {
   console.log('Get login page')
-  res.render('login', { session: req.session })
+  res.render('login', { session: req.session, message: '' })
 })
 
 /**
@@ -49,7 +49,8 @@ router.post('/login', async (req, res) => {
     return
   }
   if (!(await bcrypt.compare(password, user.password))) {
-    res.status(404).render('404', { session: req.session }) // .send('You are not registered ! Your username or password might be wrong !')
+    // res.status(404).render('404', { session: req.session }) // .send('You are not registered ! Your username or password might be wrong !')
+    res.render('login', { session: req.session, message: 'You are not registered ! Your username or password might be wrong !' })
     return
   }
 
