@@ -345,7 +345,8 @@ router.get('/buyCart', async (req, res) => {
     user.orders.push(order)
     await user.save()
     req.session.cart = []
-    res.render('index', { session: req.session, items: getLatestItems })
+    // res.render('index', { session: req.session, items: getLatestItems })
+    res.redirect('/')
   } catch (err) {
     console.log(err)
     res.status(403).send(err)
